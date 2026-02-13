@@ -26,8 +26,8 @@ INSERT INTO __mj.SchemaInfo (
 ) VALUES (
     'E0A00001-0001-0001-0001-E0A000000001',
     'sample_app',
-    3000000000,
-    3000099999,
+    10000001,
+    10099999,
     'Sample App',
     'MJ Sample Open App - demonstration schema'
 )
