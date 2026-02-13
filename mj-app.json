@@ -23,7 +23,7 @@
   "packages": {
     "server": [
       {
-        "name": "@memberjunction/sample-open-app-server",
+        "name": "is-odd",
         "role": "bootstrap",
         "startupExport": "registerSampleApp"
       }
