@@ -1,6 +1,7 @@
 {
   "name": "@mj-sample-app/entities",
   "version": "1.0.0",
+  "type": "module",
   "description": "Generated entity subclasses for the app schema. TODO(template): rename package + description.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

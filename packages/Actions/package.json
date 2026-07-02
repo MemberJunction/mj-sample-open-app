@@ -1,6 +1,7 @@
 {
   "name": "@mj-sample-app/actions",
   "version": "1.0.0",
+  "type": "module",
   "description": "MJ Actions exposed by this app (generated subclasses + hand-written actions). TODO(template): rename.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
