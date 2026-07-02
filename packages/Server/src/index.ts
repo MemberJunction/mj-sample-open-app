@@ -18,9 +18,9 @@
 import { LoadSampleAppEntitiesServer } from '@mj-sample-app/core-entities-server';
 import { LoadSampleAppActions } from '@mj-sample-app/actions';
 
-// When CodeGen has produced GraphQL resolvers, export them so MJAPI's schema
-// picks them up (see docs/codegen-and-metadata-migrations.md):
-// export * from './generated/generated';
+// CodeGen-produced GraphQL resolvers — exported so MJAPI's schema picks them
+// up (see docs/codegen-and-metadata-migrations.md):
+export * from './generated/generated';
 
 export function LoadSampleAppServer(): void {
     // Chain the sub-package loaders so a single startupExport call registers
