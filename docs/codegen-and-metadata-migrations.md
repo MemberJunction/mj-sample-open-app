@@ -24,8 +24,13 @@ You wrote a new migration (new table/column/constraint in your app schema):
      you deliberately did NOT put in the migration,
    - regenerate entity subclasses / resolvers / forms into `packages/*/src/generated/`,
    - write the SQL it executed to `migrations/codegen/` (gitignored scratch).
-3. **Append the codegen-emitted SQL** into your migration (or a follow-up
-   `V*` file) so a clean install replays exactly what codegen did.
+3. **Fold the codegen-emitted SQL that belongs to YOU** (DDL against your
+   schema, metadata inserts/updates) into your migration or a follow-up `V*`
+   file, so a clean install replays it. Do NOT fold the system plumbing —
+   `__mj_*` timestamp columns, `IDX_AUTO_MJ_FKEY_*` indexes, and the recurring
+   `spUpdateExisting…FromSchema` refresh calls — CodeGen re-applies those
+   automatically on every instance (that's exactly why your migrations must
+   not contain them).
 4. Build (`npx turbo build --filter="@mj-sample-app/*"`), then **commit the
    migration + all regenerated code together** with a changeset (≥ minor).
 
