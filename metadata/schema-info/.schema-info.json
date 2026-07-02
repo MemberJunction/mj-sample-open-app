@@ -1,0 +1,14 @@
+[
+  {
+    "fields": {
+      "SchemaName": "sample_app",
+      "EntityIDMin": 10000001,
+      "EntityIDMax": 10099999,
+      "EntityNamePrefix": "Sample App",
+      "Description": "MJ Sample Open App - demonstration schema"
+    },
+    "primaryKey": {
+      "ID": "E0A00001-0001-0001-0001-E0A000000001"
+    }
+  }
+]

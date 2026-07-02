@@ -26,8 +26,11 @@ installs replay it. Full flow: `docs/codegen-and-metadata-migrations.md`.
 |------------------------------------------------|-------------------------------------------|
 | Seed a lookup/reference table you created      | `item-types.example/` in this folder       |
 | Give your app a UI presence in MJ Explorer     | `application.example.json` (nav items)     |
-| Register schema metadata via sync (alt.)       | This template seeds `__mj.SchemaInfo` in its **baseline migration** instead — pick ONE approach |
+| Keep `__mj.SchemaInfo` in sync                 | `../schema-info/` (live in this template)  |
 
-NOTE: this template's `sample_app` SchemaInfo row is inserted by
-`migrations/V202602120001__v1.0.0_Initial_Schema.sql`. Do NOT also add a
-schema-info metadata folder for the same schema — you'd create a duplicate row.
+NOTE: this template's `sample_app` SchemaInfo row is INSERTED by the baseline
+migration (`migrations/V202602120001__v1.0.0_Initial_Schema.sql`) and the live
+`metadata/schema-info/` record points at the SAME primary key — so `mj sync
+push` idempotently updates that one row rather than duplicating it. If you add
+schema-info metadata for your own schema, pin its `primaryKey.ID` to the UUID
+your baseline migration uses.

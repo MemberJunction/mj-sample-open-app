@@ -3,5 +3,7 @@
   "push": {
     "autoCreateMissingRecords": true
   },
-  "directoryOrder": []
+  "directoryOrder": [
+    "schema-info"
+  ]
 }
