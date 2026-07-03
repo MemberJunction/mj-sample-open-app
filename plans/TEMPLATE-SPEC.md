@@ -34,7 +34,7 @@ optional.
 | `migrations/` | **REQ\*** (schema apps) | Skyway (Flyway-compatible) migrations, applied to the app's OWN schema. Naming `V<YYYYMMDDHHMM>__v<appver>_<Description>.sql` (baseline may use `B` prefix; metadata seeds conventionally `*_Metadata_Sync.sql`). Immutable once applied/published; timestamps strictly increasing (CI-gated). No `__mj_*` timestamp columns / FK indexes (CodeGen owns them); hardcoded UUIDs. |
 | `migrations-pg/` | OPT | PostgreSQL variants, generated via `mj migrate convert` (`npm run mj:migrate:convert`). On PG the engine reads `<directory>-pg`. |
 | `metadata/` | OPT | mj-sync dirs: root `.mj-sync.json` (+ `directoryOrder`), one subfolder per entity (`.mj-sync.json` + `.<records>.json`). DEV-TIME ONLY — installs replay the equivalent SQL from migrations, never this folder. |
-| Schema registration (`__mj.SchemaInfo` + `EntityNamePrefix`) | **REQ\*** (schema apps) | Seeded either in the baseline migration (this template, see `migrations/V…Initial_Schema.sql`) or via a `metadata/schema-info/` folder (bizapps pattern) — pick ONE. |
+| Schema registration (`__mj.SchemaInfo` + `EntityNamePrefix`) | **REQ\*** (schema apps) | Seeded either via a `metadata/schema-info/` folder (this template + bizapps pattern; created on first `mj sync push`) or in the baseline migration — pick ONE. |
 
 ## 3. packages/ (npm workspace members)
 

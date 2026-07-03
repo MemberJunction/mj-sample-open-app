@@ -12,15 +12,17 @@
  *   src/generated/  — CodeGen GraphQLServer output (resolvers; do not edit)
  *   src/            — hand-written resolvers / engines / providers
  *
+ * AFTER YOUR FIRST CODEGEN RUN: CodeGen writes src/generated/generated.ts
+ * (GraphQL resolvers for your entities). Uncomment the export below so they
+ * ship with the package, and commit the generated code with its migration:
+ *
+ *   export * from './generated/generated';
+ *
  * TODO(template): rename the function to Load<YourApp>Server and keep it in
  * sync with mj-app.json "startupExport".
  */
 import { LoadSampleAppEntitiesServer } from '@mj-sample-app/core-entities-server';
 import { LoadSampleAppActions } from '@mj-sample-app/actions';
-
-// CodeGen-produced GraphQL resolvers — exported so MJAPI's schema picks them
-// up (see docs/codegen-and-metadata-migrations.md):
-export * from './generated/generated';
 
 export function LoadSampleAppServer(): void {
     // Chain the sub-package loaders so a single startupExport call registers

@@ -26,11 +26,11 @@ installs replay it. Full flow: `docs/codegen-and-metadata-migrations.md`.
 |------------------------------------------------|-------------------------------------------|
 | Seed a lookup/reference table you created      | `item-types.example/` in this folder       |
 | Give your app a UI presence in MJ Explorer     | `application.example.json` (nav items)     |
-| Keep `__mj.SchemaInfo` in sync                 | `../schema-info/` (live in this template)  |
+| Register your schema with MJ (`__mj.SchemaInfo`) | `../schema-info/` (live in this template)  |
 
-NOTE: this template's `sample_app` SchemaInfo row is INSERTED by the baseline
-migration (`migrations/V202602120001__v1.0.0_Initial_Schema.sql`) and the live
-`metadata/schema-info/` record points at the SAME primary key — so `mj sync
-push` idempotently updates that one row rather than duplicating it. If you add
-schema-info metadata for your own schema, pin its `primaryKey.ID` to the UUID
-your baseline migration uses.
+NOTE: this template registers the `sample_app` schema via metadata: the live
+`metadata/schema-info/` record (with a pinned `primaryKey.ID`) is CREATED in
+`__mj.SchemaInfo` on the first `mj sync push` — the same pattern the shipped
+BizApps use. Rename its `SchemaName`, `EntityNamePrefix`, and description when
+you rename the app (the pinned UUID can stay or be regenerated — just keep it
+stable once pushed anywhere).

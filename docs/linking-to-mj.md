@@ -148,5 +148,5 @@ app schema from your dev database.
 
 1. `npm ls @memberjunction/global` at the MJ root shows **one** resolved copy.
 2. MJAPI boot log shows your package loading + `LoadSampleAppServer` called.
-3. Your entities appear in MJ metadata (e.g. query `Sample App: Sample Records`
-   via GraphQL, or see them in Explorer).
+3. Once you've added your first migration + run codegen, your entities appear
+   in MJ metadata (queryable via GraphQL / visible in Explorer).

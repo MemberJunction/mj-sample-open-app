@@ -15,7 +15,10 @@ applied file; add a new one (see PUBLISH_NO_BREAK policy in docs/publishing.md).
 - Do NOT add `__mj_CreatedAt`/`__mj_UpdatedAt` columns or FK indexes — CodeGen does.
 - A PR that adds a migration MUST carry a changeset with at least a `minor` bump (CI enforces).
 
-The two committed V2026…sql files are working, heavily-commented examples of a
-full initial schema (SchemaInfo + table + view + SPs + entity/field registration)
-and a seed. `EXAMPLE_*.sql.example` is an inert skeleton to copy for new work.
+This folder starts EMPTY on purpose — the template ships no schema, so your
+first migration is genuinely yours. `EXAMPLE_*.sql.example` is an inert
+skeleton to copy for new work; for a complete worked example (table + view +
+SPs + entity/field registration) see any shipped BizApps app's baseline
+migration. Schema registration (`__mj.SchemaInfo`) is handled by
+`metadata/schema-info/` in this template — don't duplicate it here.
 See docs/codegen-and-metadata-migrations.md for the full authoring loop.
