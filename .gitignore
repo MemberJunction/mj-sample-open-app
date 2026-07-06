@@ -1,14 +1,3 @@
-# Dependencies / build output
-node_modules/
-dist/
-*.tsbuildinfo
-.turbo/
-.cache/
-
-# Environment / secrets — NEVER commit credentials
-.env
-.env.*
-
 # CodeGen scratch output (fold what you need into migrations/, then discard)
 codegen.output.log
 migrations/codegen/
@@ -22,9 +11,6 @@ metadata/**/.backups/
 .DS_Store
 report.html
 report.json
-
-**/.mjrc.cjs
-
 
 # These are some examples of commonly ignored file patterns.
 # You should customize this list as applicable to your project.
@@ -251,5 +237,3 @@ migrations/v*/*__RSU_*.sql
 # explicitly un-ignore this one subtree.
 !/templates/claude-pack/dist/
 !/templates/claude-pack/dist/**
-
-
