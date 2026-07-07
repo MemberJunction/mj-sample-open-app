@@ -21,7 +21,7 @@
  * diff with `git diff` before committing. Safe to re-run only BEFORE you
  * commit (it looks for the template tokens; once renamed they're gone).
  */
-import { createInterface } from 'node:readline/promises';
+import { createInterface } from 'node:readline';
 import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
@@ -38,7 +38,25 @@ for (let i = 0; i < argv.length; i++) {
 }
 
 // ---------- prompts ---------------------------------------------------------
+// Line-queue reader: unlike rl.question(), this works when stdin is a PIPE
+// (all lines arrive at once and the stream closes before later questions).
 const rl = createInterface({ input: process.stdin, output: process.stdout });
+const pendingLines = [];
+const lineWaiters = [];
+let stdinClosed = false;
+rl.on('line', (l) => { const w = lineWaiters.shift(); if (w) w(l); else pendingLines.push(l); });
+rl.on('close', () => { stdinClosed = true; while (lineWaiters.length) lineWaiters.shift()(null); });
+function nextLine() {
+  if (pendingLines.length) return Promise.resolve(pendingLines.shift());
+  if (stdinClosed) return Promise.resolve(null);
+  return new Promise((res) => lineWaiters.push(res));
+}
+async function readAnswer(prompt) {
+  process.stdout.write(prompt);
+  const line = await nextLine();
+  if (line === null) { console.error('\n✗ Input ended before all questions were answered — pass the remaining values as flags.'); process.exit(1); }
+  return line.trim();
+}
 /**
  * Prompt for one answer. `opts.describe` prints a short explanation above the
  * prompt; `opts.def` is the default accepted by pressing Enter. Flags always
@@ -51,7 +69,7 @@ async function ask(flag, question, validate, opts = {}) {
     if (value == null) {
       if (opts.describe && !described) { console.log(`\n${opts.describe}`); described = true; }
       const suffix = opts.def != null ? ` [${opts.def}]` : '';
-      value = (await rl.question(`${question}${suffix}: `)).trim();
+      value = await readAnswer(`${question}${suffix}: `);
       if (!value && opts.def != null) value = opts.def;
     }
     const problem = validate(value);
@@ -135,7 +153,7 @@ const replacements = [
 
 console.log(`\nRenaming to:\n  id=${name}  display="${display}"  scope=${scope}\n  schema=${schema}  prefix="${prefix}"  repo=${repoUrl}\n  SchemaInfo UUID=${schemaUuid}\n`);
 if (!args.yes) {
-  const ok = (await rl.question('Proceed? [y/N] ')).trim().toLowerCase();
+  const ok = (await readAnswer('Proceed? [y/N] ')).toLowerCase();
   if (ok !== 'y' && ok !== 'yes') { console.log('Aborted — nothing changed.'); process.exit(0); }
 }
 rl.close();
