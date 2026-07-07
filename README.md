@@ -37,7 +37,7 @@ the content is yours.
 | `mj.config.cjs` | CodeGen/migrate configuration for this repo | **Required** for codegen |
 | `.github/workflows/` | CI: `build`, `changes` (migration + changeset gates), `publish` (npm via OIDC) | Recommended |
 | `.changeset/` + `ci/` | Fixed versioning + release pipeline helpers | Recommended |
-| `docs/` + `plans/TEMPLATE-SPEC.md` | The deep-dive docs + the full required/optional inventory | Recommended |
+| `docs/template-docs/` + `plans/TEMPLATE-SPEC.md` | The deep-dive docs + the full required/optional inventory | Recommended |
 
 Each package is deliberately minimal — a `package.json` (showing the
 dependency conventions), a `tsconfig.json`, and one commented source file that
@@ -68,10 +68,10 @@ folder under `packages/dev-apps/`.
 
 | You want to… | Do this | Details |
 |---|---|---|
-| **Add a table / schema change** | Write `migrations/V<YYYYMMDDHHMM>__v<ver>_<Desc>.sql` (copy the `EXAMPLE_*.sql.example` skeleton), then run migrations + codegen (below) | [migrations/_README.md](migrations/_README.md), [docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
-| **Run your migrations** | `npx mj migrate --schema sample_app --dir packages/dev-apps/<app>/migrations` | [docs/linking-to-mj.md](docs/template-docs/linking-to-mj.md) §5 |
-| **Run CodeGen** (after every schema/metadata change) | `npx mj codegen` — generates entity classes, resolvers, and forms into `packages/*/src/generated/`; **commit the generated code with its migration** | [docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
-| **Capture a CodeGen migration** | Fold the SQL CodeGen emitted for YOUR objects (from `migrations/codegen/`, gitignored scratch) into a `V*` migration; never fold the `__mj_*` system plumbing — CodeGen re-applies that everywhere itself | [docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
+| **Add a table / schema change** | Write `migrations/V<YYYYMMDDHHMM>__v<ver>_<Desc>.sql` (copy the `EXAMPLE_*.sql.example` skeleton), then run migrations + codegen (below) | [migrations/_README.md](migrations/_README.md), [docs/template-docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
+| **Run your migrations** | `npx mj migrate --schema sample_app --dir packages/dev-apps/<app>/migrations` | [docs/template-docs/linking-to-mj.md](docs/template-docs/linking-to-mj.md) §5 |
+| **Run CodeGen** (after every schema/metadata change) | `npx mj codegen` — generates entity classes, resolvers, and forms into `packages/*/src/generated/`; **commit the generated code with its migration** | [docs/template-docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
+| **Capture a CodeGen migration** | Fold the SQL CodeGen emitted for YOUR objects (from `migrations/codegen/`, gitignored scratch) into a `V*` migration; never fold the `__mj_*` system plumbing — CodeGen re-applies that everywhere itself | [docs/template-docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
 | **Add / change metadata** (apps, nav items, lookup seeds, actions) | Add an entity folder under `metadata/`, `npx mj sync push --dir=<app>/metadata --format=json`, then capture the SQL as a `V*_Metadata_Sync.sql` migration | [docs/template-docs/metadata.md](docs/template-docs/metadata.md) |
 | **Add server code** (entity overrides, engines, resolvers) | `packages/CoreEntitiesServer` / `packages/Server` — wire new modules into `Server/src/index.ts` so the bootstrap loads them | comments in those files |
 | **Add an Action** | `packages/Actions` — `@RegisterClass(BaseAction, '<Your App>: <Name>')` + an action metadata record + migration | comments in `packages/Actions/src/index.ts` |
@@ -94,4 +94,4 @@ patterns, CodeGen + migration rules, Angular conventions, style, testing —
 is [docs/claude/](docs/claude/README.md) (topic docs with a TOC, referenced
 from [CLAUDE.md](CLAUDE.md)). The complete
 what-belongs-in-an-app inventory (required vs optional, with the shipped
-first-party apps as exemplars): [plans/TEMPLATE-SPEC.md](plans/complete/TEMPLATE-SPEC.md).
+first-party apps as exemplars): [plans/complete/TEMPLATE-SPEC.md](plans/complete/TEMPLATE-SPEC.md).
