@@ -54,14 +54,15 @@ async function ask(flag, question, validate, hint) {
 const nonEmpty = (v) => (v ? null : 'required');
 const appIdRe = /^[a-z][a-z0-9-]{1,62}[a-z0-9]$/;
 const schemaRe = /^[a-z][a-z0-9_]{1,126}[a-z0-9]$/;
-const scopeRe = /^@[a-z0-9-~][a-z0-9-._~]*\/[a-z0-9-~][a-z0-9-._~]*$/;
+// "@acme" (packages become @acme/entities) or "@acme/crm" (=> @acme/crm-entities)
+const scopeRe = /^@[a-z0-9-~][a-z0-9-._~]*(\/[a-z0-9-~][a-z0-9-._~]*)?$/;
 
 console.log('\nMJ Open App template setup — answers become your app\'s identity.\n');
 
 const name = await ask('name', 'App id (mj-app.json "name")', (v) => appIdRe.test(v) ? null : 'lowercase letters/digits/hyphens, 3-64 chars, e.g. acme-crm');
 const display = await ask('display', 'Display name', nonEmpty, 'e.g. Acme CRM');
 const description = await ask('description', 'Description (10-500 chars)', (v) => v.length >= 10 && v.length <= 500 ? null : '10-500 characters');
-const scope = await ask('scope', 'npm package scope base', (v) => scopeRe.test(v) ? null : 'e.g. @acme/crm — packages become @acme/crm-entities etc. (well, ' + '@acme/crm/entities is invalid; we use it as the literal replacement for @mj-sample-app)');
+const scope = await ask('scope', 'npm package scope base', (v) => scopeRe.test(v) ? null : 'a scope like @acme (=> @acme/entities) or scope+name like @acme/crm (=> @acme/crm-entities)');
 const schema = await ask('schema', 'SQL schema name', (v) => schemaRe.test(v) ? null : 'lowercase + underscores, e.g. acme_crm (no leading __ — reserved)');
 const prefix = await ask('prefix', 'Entity name prefix', nonEmpty, 'e.g. Acme CRM — entities become "Acme CRM: Things"');
 const repo = await ask('repo', 'GitHub repository URL', (v) => /^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(v.replace(/\.git$/, '')) ? null : 'https://github.com/<org>/<repo>');
@@ -85,7 +86,11 @@ const replacements = [
   ['LoadSampleAppServer', `Load${pascal}Server`],
   ['LoadSampleAppClient', `Load${pascal}Client`],
   ['SampleAppDashboard', `${pascal}Dashboard`],
-  ['@mj-sample-app', scope],
+  // Scope: "@acme" swaps 1:1 (=> @acme/server); "@acme/crm" needs the
+  // slash-form rewrite so package names stay valid (=> @acme/crm-server).
+  ...(scope.includes('/')
+    ? [['@mj-sample-app/', `${scope}-`], ['@mj-sample-app', scope.split('/')[0]]]
+    : [['@mj-sample-app', scope]]),
   ['mj-sample-open-app', repoName],
   ['mj-sample-app', name],
   ['sample_app', schema],
