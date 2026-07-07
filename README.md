@@ -28,7 +28,7 @@ the content is yours.
 | `mj-app.json` | THE app manifest (identity, schema, migrations, packages) | **Required** |
 | `mj-app.reference.jsonc` | Fully-annotated manifest reference — every block explained | reference |
 | `migrations/` | Skyway migrations for your schema — **starts empty**; inert example skeleton + README inside | With a schema |
-| `metadata/` | mj-sync metadata; ships one live folder (`schema-info/`, registers your schema). Authoring guide: `docs/template-docs/metadata.md` | Optional |
+| `metadata/` | mj-sync metadata. `schema-info/` registers your schema and **requires fill-out** (ships as an inert `.template` — see its README). Authoring guide: `docs/template-docs/metadata.md` | Optional |
 | `packages/Entities` | CodeGen entity subclasses land here (placeholder until your first codegen) | With a schema |
 | `packages/CoreEntitiesServer` | Server-side entity overrides (validation, save hooks) | Optional |
 | `packages/Actions` | MJ Actions — agent/workflow integration points | Optional |

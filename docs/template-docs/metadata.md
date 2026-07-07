@@ -15,9 +15,10 @@ is how to format and write them. The lifecycle rule to internalize first:
 ```
 metadata/
 ├── .mj-sync.json            # ROOT config: push options + directoryOrder
-├── schema-info/             # live in this template — registers your schema
+├── schema-info/             # REQUIRED FILL-OUT — registers your schema (see below)
 │   ├── .mj-sync.json        #   entity: "MJ: Schema Info"
-│   └── .schema-info.json    #   the record(s)
+│   ├── README.md            #   activation instructions
+│   └── schema-info.json.template  # copy → .schema-info.json + fill the TODOs
 └── <one folder per entity>/
     ├── .mj-sync.json        # which entity this folder maps to + options
     └── .<records>.json      # the records (dot-prefixed JSON array)
@@ -41,7 +42,36 @@ metadata/
 
 `autoCreateMissingRecords: true` lets a record that carries a `primaryKey`
 but doesn't exist in the DB be **created** with that exact ID — that's how
-this template's `schema-info` row appears on first push.
+your `schema-info` row appears on first push once you've activated it (next
+section).
+
+## Schema registration (`schema-info/`) — ⚠️ REQUIRED, and you must fill it out
+
+`__mj.SchemaInfo` is the record that registers your schema with MJ: it
+reserves an entity **ID range** and sets the **`EntityNamePrefix`** that keeps
+your entity names (`Sample App: Item Types`) from colliding with MJ core or
+other apps. Every schema-backed app needs exactly one row.
+
+**The template ships it deliberately unusable-as-is**: the record is a
+`schema-info.json.template` file that `mj sync` cannot see (wrong filename
+pattern), containing `TODO` placeholders — so no placeholder data can ever
+reach a database. Until you activate it, a push over `metadata/` simply
+pushes nothing for this folder, and your schema stays unregistered (codegen
+won't apply your prefix). **Activate it before your first real sync:**
+
+1. Copy `schema-info.json.template` → **`.schema-info.json`** (leading dot).
+2. Fill every `TODO`:
+   | Field | What to put |
+   |---|---|
+   | `SchemaName` | Exactly your `mj-app.json` `schema.name` |
+   | `EntityIDMin` / `EntityIDMax` | An integer range reserved for your app's entities, non-overlapping with other apps (e.g. `10000001`–`10099999`) |
+   | `EntityNamePrefix` | Your prefix (e.g. `Sample App`) — must agree with `mj.config.cjs` `NameRulesBySchema` |
+   | `Description` | One line about the schema |
+   | `primaryKey.ID` | A **freshly generated UUID** (`uuidgen`) — keep it stable forever once pushed anywhere |
+3. Push (workflow below) — the row is created with your pinned ID.
+
+`metadata/schema-info/README.md` carries the same instructions next to the
+file itself.
 
 ## A folder's `.mj-sync.json`
 
@@ -160,8 +190,8 @@ push as a distribution mechanism.
 
 - The `metadata/` root must contain **at least one entity folder** listed in
   `directoryOrder` — `mj sync push` fails with "No entity directories found"
-  on an empty tree (this template's `schema-info/` folder is what keeps the
-  setup loop green; don't remove it, rename its contents).
+  on an empty tree (this template's `schema-info/` FOLDER is what satisfies
+  that — keep it even before you've filled out its record).
 - Only dot-prefixed `.json` files matching a folder's `filePattern` are
   records. Don't park drafts or samples inside `metadata/` — anything
   matching the pattern in a registered folder WILL be pushed.
