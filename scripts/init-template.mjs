@@ -62,7 +62,7 @@ console.log('\nMJ Open App template setup — answers become your app\'s identit
 const name = await ask('name', 'App id (mj-app.json "name")', (v) => appIdRe.test(v) ? null : 'lowercase letters/digits/hyphens, 3-64 chars, e.g. acme-crm');
 const display = await ask('display', 'Display name', nonEmpty, 'e.g. Acme CRM');
 const description = await ask('description', 'Description (10-500 chars)', (v) => v.length >= 10 && v.length <= 500 ? null : '10-500 characters');
-const scope = await ask('scope', 'npm package scope base', (v) => scopeRe.test(v) ? null : 'a scope like @acme (=> @acme/entities) or scope+name like @acme/crm (=> @acme/crm-entities)');
+const scope = await ask('scope', 'npm package name prefix — replaces "@mj-sample-app" in package names', (v) => scopeRe.test(v) ? null : 'an npm scope like @acme (packages become @acme/entities) or scope+app like @acme/crm (packages become @acme/crm-entities). The scope must be an npm org you own when you publish.');
 const schema = await ask('schema', 'SQL schema name', (v) => schemaRe.test(v) ? null : 'lowercase + underscores, e.g. acme_crm (no leading __ — reserved)');
 const prefix = await ask('prefix', 'Entity name prefix', nonEmpty, 'e.g. Acme CRM — entities become "Acme CRM: Things"');
 const repo = await ask('repo', 'GitHub repository URL', (v) => /^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(v.replace(/\.git$/, '')) ? null : 'https://github.com/<org>/<repo>');
