@@ -34,7 +34,7 @@ const argv = process.argv.slice(2);
 for (let i = 0; i < argv.length; i++) {
   if (argv[i].startsWith('--')) {
     const key = argv[i].slice(2);
-    if (key === 'yes' || key === 'allow-reserved-schema') { args[key] = true; continue; }
+    if (key === 'yes' || key === 'allow-reserved-schema' || key === 'first-party' || key === 'third-party') { args[key] = true; continue; }
     args[key] = argv[++i];
   }
 }
@@ -140,20 +140,39 @@ const description = await ask('description', 'Description', (v) => v.length >= 1
   def: keep(cur.description),
   describe: 'One or two sentences on what the app does — shown in discovery listings.',
 });
+// First-party MemberJunction apps (the primary audience right now) get MJ
+// defaults: a reserved __mj_* schema (no confirmation needed), MemberJunction
+// publisher + repo org. Third-party apps keep the standalone defaults.
+let firstParty;
+if (args['first-party']) firstParty = true;
+else if (args['third-party']) firstParty = false;
+else {
+  const fpDef = isTemplate ? 'y' : (cur.schema.startsWith('__') ? 'y' : 'n');
+  const fp = await ask('__fp', 'First-party MemberJunction app?', (v) => /^(y|yes|n|no)$/i.test(v) ? null : 'y or n', {
+    def: fpDef,
+    describe: 'First-party = built by the MemberJunction team (the primary audience for\nthis template right now). Answering y selects the MJ conventions: a reserved\n__mj_* schema, MemberJunction publisher, github.com/MemberJunction repo.\nAnswer n for a third-party/community app.',
+  });
+  firstParty = /^y/i.test(fp);
+}
+
 const scope = await ask('scope', 'npm package prefix', (v) => scopeRe.test(v) ? null : 'an npm scope like @acme-crm (=> @acme-crm/entities) or scope+app like @acme/crm (=> @acme/crm-entities)', {
-  def: isTemplate ? `@${name}` : cur.scope,
-  describe: 'The prefix for this app\'s npm packages. The default follows the MJ template\nconvention (a scope named after your app) and suits a standalone app. Change\nit if your org publishes several apps under one npm org (e.g. @acme/crm =>\n@acme/crm-entities, the BizApps shape). Publishing requires owning the org.',
+  def: isTemplate ? (firstParty ? `@memberjunction/${name}` : `@${name}`) : cur.scope,
+  describe: firstParty
+    ? 'The prefix for this app\'s npm packages. The default puts them in the\n@memberjunction org as @memberjunction/<app>-entities etc. Follow team\nconvention — the shipped BizApps use their own org (@mj-biz-apps/<app>-*).'
+    : 'The prefix for this app\'s npm packages. The default follows the MJ template\nconvention (a scope named after your app) and suits a standalone app. Change\nit if your org publishes several apps under one npm org (e.g. @acme/crm =>\n@acme/crm-entities, the BizApps shape). Publishing requires owning the org.',
 });
 
 // Schema — with the reserved "__" override (interactive confirmation).
 let schema;
 while (true) {
   schema = await ask('schema', 'SQL schema name', (v) => schemaRe.test(v) ? null : 'letters/digits/underscores, e.g. acme_crm (up to two leading underscores)', {
-    def: isTemplate ? name.replace(/-/g, '_') : cur.schema,
-    describe: 'The dedicated database schema that will hold every table your app creates.\nThe default (your app id with underscores) keeps names traceable. Schemas\nstarting with "__" are RESERVED for first-party MemberJunction apps — you can\noverride, but installs/links then require an explicit allow flag.',
+    def: isTemplate ? (firstParty ? `__mj_${pascalOf(name)}` : name.replace(/-/g, '_')) : cur.schema,
+    describe: firstParty
+      ? 'The dedicated database schema for this app\'s tables. First-party MJ apps use\nthe reserved __mj_* namespace (the default, matching the shipped BizApps —\ne.g. __mj_BizAppsCommon). Installs/dev-links of __ schemas use an allow flag.'
+      : 'The dedicated database schema that will hold every table your app creates.\nThe default (your app id with underscores) keeps names traceable. Schemas\nstarting with "__" are RESERVED for first-party MemberJunction apps — you can\noverride, but installs/links then require an explicit allow flag.',
   });
   if (!schema.startsWith('__')) break;
-  if (args['allow-reserved-schema']) break;
+  if (firstParty || args['allow-reserved-schema']) break;   // intended for first-party — no confirmation needed
   if (args.schema != null && !args['allow-reserved-schema']) {
     console.error('✗ Schema names starting with "__" are reserved for first-party MJ apps. Re-run with --allow-reserved-schema to confirm.');
     process.exit(1);
@@ -169,14 +188,14 @@ const prefix = await ask('prefix', 'Entity name prefix', nonEmpty, {
   describe: 'Stamped on your entity names ("Acme CRM: Customers") so they can never\ncollide with MJ core or other apps. The default is right for almost everyone.',
 });
 const repo = await ask('repo', 'GitHub repository URL', (v) => /^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(v.replace(/\.git$/, '')) ? null : 'https://github.com/<org>/<repo>', {
-  def: keep(cur.repo),
+  def: keep(cur.repo) ?? (firstParty && isTemplate ? `https://github.com/MemberJunction/${name}` : undefined),
   describe: 'Where this repo lives on GitHub — used by `mj app install`, npm provenance,\nand the CI repository-url validator.',
 });
 const publisher = await ask('publisher', 'Publisher name', nonEmpty, {
-  def: keep(cur.publisher),
+  def: keep(cur.publisher) ?? (firstParty && isTemplate ? 'MemberJunction' : undefined),
   describe: 'Who ships this app — shown in the manifest\'s publisher block.',
 });
-const email = await ask('email', 'Publisher email', nonEmpty, { def: keep(cur.email) });
+const email = await ask('email', 'Publisher email', nonEmpty, { def: keep(cur.email) ?? (firstParty && isTemplate ? 'dev@memberjunction.com' : undefined) });
 const idMin = await ask('id-min', 'Entity ID range MIN', (v) => /^\d+$/.test(v) ? null : 'integer, e.g. 10000001', {
   def: cur.idMin,
   describe: 'An integer ID block reserved for this app\'s entities in __mj.SchemaInfo.\nKeep the current/default block unless another app on the same database\nalready claims it — ranges must never overlap.',

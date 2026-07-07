@@ -64,6 +64,20 @@ node scripts/init-template.mjs \
   --yes
 ```
 
+## First-party vs third-party
+
+Early on, the script asks **"First-party MemberJunction app?"** (defaults to
+`y` on a fresh template — MJ developers are the primary audience; on a re-run
+it defaults to what the current schema implies). Answering `y` flips the
+defaults to the MJ team conventions: a **reserved `__mj_<Pascal>` schema**
+(accepted without any confirmation — it's the intended namespace, matching
+the shipped BizApps like `__mj_BizAppsCommon`), `@memberjunction/<app>-*`
+packages (follow team convention — BizApps use their own `@mj-biz-apps` org),
+MemberJunction publisher, and a `github.com/MemberJunction/<app>` repo.
+Answering `n` keeps the standalone defaults, and a `__` schema then requires
+an explicit interactive `y` confirmation (or `--allow-reserved-schema`).
+Flags: `--first-party` / `--third-party` skip the question.
+
 ## The options
 
 Prompts with a **default** show it in `[brackets]` — press Enter to accept.
@@ -81,7 +95,8 @@ Defaults are derived from your earlier answers following MJ conventions.
 | `--publisher` | Publisher name | Your organization — goes in the manifest's `publisher` block | — | Free text |
 | `--email` | Publisher email | Contact for the publisher block | — | Free text |
 | `--id-min` / `--id-max` | Entity ID range | The integer ID range reserved for this app's entities in `__mj.SchemaInfo`. Pick a block that does not overlap any other app installed alongside yours | `10000001` / min+99998 — fine for the first app on a database; move the block if another app claims it | Integers, max > min |
-| `--allow-reserved-schema` | — | Accept a `__`-prefixed schema non-interactively (first-party MJ apps only) | — | — |
+| `--first-party` / `--third-party` | First-party MemberJunction app? | Selects the default set (see section above) | `y` on a fresh template; inferred from the current schema on re-runs | Mutually exclusive booleans |
+| `--allow-reserved-schema` | — | Accept a `__`-prefixed schema non-interactively when NOT first-party | — | — |
 | `--yes` | — | Skip the confirmation prompt (for scripted use) | — | — |
 
 One value you do **not** choose: the **SchemaInfo UUID**. The script generates
