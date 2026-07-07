@@ -28,7 +28,7 @@ the content is yours.
 | `mj-app.json` | THE app manifest (identity, schema, migrations, packages) | **Required** |
 | `mj-app.reference.jsonc` | Fully-annotated manifest reference — every block explained | reference |
 | `migrations/` | Skyway migrations for your schema — **starts empty**; inert example skeleton + README inside | With a schema |
-| `metadata/` | mj-sync metadata; ships one live folder (`schema-info/`, registers your schema) + inert `_examples/` | Optional |
+| `metadata/` | mj-sync metadata; ships one live folder (`schema-info/`, registers your schema). Authoring guide: `docs/template-docs/metadata.md` | Optional |
 | `packages/Entities` | CodeGen entity subclasses land here (placeholder until your first codegen) | With a schema |
 | `packages/CoreEntitiesServer` | Server-side entity overrides (validation, save hooks) | Optional |
 | `packages/Actions` | MJ Actions — agent/workflow integration points | Optional |
@@ -72,7 +72,7 @@ folder under `packages/dev-apps/`.
 | **Run your migrations** | `npx mj migrate --schema sample_app --dir packages/dev-apps/<app>/migrations` | [docs/linking-to-mj.md](docs/template-docs/linking-to-mj.md) §5 |
 | **Run CodeGen** (after every schema/metadata change) | `npx mj codegen` — generates entity classes, resolvers, and forms into `packages/*/src/generated/`; **commit the generated code with its migration** | [docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
 | **Capture a CodeGen migration** | Fold the SQL CodeGen emitted for YOUR objects (from `migrations/codegen/`, gitignored scratch) into a `V*` migration; never fold the `__mj_*` system plumbing — CodeGen re-applies that everywhere itself | [docs/codegen-and-metadata-migrations.md](docs/template-docs/codegen-and-metadata-migrations.md) |
-| **Add / change metadata** (apps, nav items, lookup seeds, actions) | Edit `metadata/` (copy an `_examples/` folder to start), `npx mj sync push --dir=<app>/metadata --format=json`, then capture the SQL as a `V*_Metadata_Sync.sql` migration | [metadata/_examples/README.md](metadata/_examples/README.md) |
+| **Add / change metadata** (apps, nav items, lookup seeds, actions) | Add an entity folder under `metadata/`, `npx mj sync push --dir=<app>/metadata --format=json`, then capture the SQL as a `V*_Metadata_Sync.sql` migration | [docs/template-docs/metadata.md](docs/template-docs/metadata.md) |
 | **Add server code** (entity overrides, engines, resolvers) | `packages/CoreEntitiesServer` / `packages/Server` — wire new modules into `Server/src/index.ts` so the bootstrap loads them | comments in those files |
 | **Add an Action** | `packages/Actions` — `@RegisterClass(BaseAction, '<Your App>: <Name>')` + an action metadata record + migration | comments in `packages/Actions/src/index.ts` |
 | **Add UI** (components / dashboards) | `packages/Angular` — components under `src/lib/`, exported from `public-api.ts`; nav items via an application metadata record | comments in `packages/Angular/src/public-api.ts` |
@@ -94,4 +94,4 @@ patterns, CodeGen + migration rules, Angular conventions, style, testing —
 is [docs/claude/](docs/claude/README.md) (topic docs with a TOC, referenced
 from [CLAUDE.md](CLAUDE.md)). The complete
 what-belongs-in-an-app inventory (required vs optional, with the shipped
-first-party apps as exemplars): [plans/TEMPLATE-SPEC.md](plans/TEMPLATE-SPEC.md).
+first-party apps as exemplars): [plans/TEMPLATE-SPEC.md](plans/complete/TEMPLATE-SPEC.md).

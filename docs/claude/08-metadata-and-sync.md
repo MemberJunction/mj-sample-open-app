@@ -1,9 +1,9 @@
 # 8 · Metadata & mj-sync
 
 How MJ metadata records (applications, lookup seeds, actions, prompts,
-queries…) are authored as files and pushed. This app's `metadata/` folder +
-`_examples/` follow these rules; the app-repo capture flow (metadata →
-`V*_Metadata_Sync.sql` migration) is in
+queries…) are authored as files and pushed. This app's `metadata/` folder follows these rules; the full authoring guide
+with worked examples is [`../template-docs/metadata.md`](../template-docs/metadata.md),
+and the app-repo capture flow (metadata → `V*_Metadata_Sync.sql` migration) is in
 [`../template-docs/codegen-and-metadata-migrations.md`](../template-docs/codegen-and-metadata-migrations.md).
 
 ## File organization
@@ -25,7 +25,7 @@ queries…) are authored as files and pushed. This app's `metadata/` folder +
 Never seed lookup tables with raw `INSERT`s you hand-write **as the source of
 truth** — author the records as metadata files (version-controlled, readable,
 upsertable, `@lookup:` resolution) and let the sync→migration capture produce
-the SQL that ships. See `metadata/_examples/item-types.example/` here.
+the SQL that ships. Worked example: [`../template-docs/metadata.md`](../template-docs/metadata.md).
 
 ## Applications & nav items
 
@@ -34,7 +34,7 @@ An `Applications` record gives your app UI presence in Explorer. Each
 exactly match an
 `@RegisterClass(BaseResourceComponent, '<DriverClass>')` component in your
 Angular package (+ a tree-shaking prevention export). One `isDefault: true`
-per app. Example: `metadata/_examples/application.example.json`.
+per app. Worked example: [`../template-docs/metadata.md`](../template-docs/metadata.md).
 
 ## Commands
 
