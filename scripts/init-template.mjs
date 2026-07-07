@@ -39,10 +39,21 @@ for (let i = 0; i < argv.length; i++) {
 
 // ---------- prompts ---------------------------------------------------------
 const rl = createInterface({ input: process.stdin, output: process.stdout });
-async function ask(flag, question, validate, hint) {
+/**
+ * Prompt for one answer. `opts.describe` prints a short explanation above the
+ * prompt; `opts.def` is the default accepted by pressing Enter. Flags always
+ * win (validated, fail-fast).
+ */
+async function ask(flag, question, validate, opts = {}) {
   let value = args[flag];
+  let described = false;
   while (true) {
-    if (value == null) value = (await rl.question(`${question}${hint ? ` (${hint})` : ''}: `)).trim();
+    if (value == null) {
+      if (opts.describe && !described) { console.log(`\n${opts.describe}`); described = true; }
+      const suffix = opts.def != null ? ` [${opts.def}]` : '';
+      value = (await rl.question(`${question}${suffix}: `)).trim();
+      if (!value && opts.def != null) value = opts.def;
+    }
     const problem = validate(value);
     if (!problem) return value;
     console.error(`  ✗ ${problem}`);
@@ -59,17 +70,41 @@ const scopeRe = /^@[a-z0-9-~][a-z0-9-._~]*(\/[a-z0-9-~][a-z0-9-._~]*)?$/;
 
 console.log('\nMJ Open App template setup — answers become your app\'s identity.\n');
 
-const name = await ask('name', 'App id (mj-app.json "name")', (v) => appIdRe.test(v) ? null : 'lowercase letters/digits/hyphens, 3-64 chars, e.g. acme-crm');
-const display = await ask('display', 'Display name', nonEmpty, 'e.g. Acme CRM');
-const description = await ask('description', 'Description (10-500 chars)', (v) => v.length >= 10 && v.length <= 500 ? null : '10-500 characters');
-const scope = await ask('scope', 'npm package name prefix — replaces "@mj-sample-app" in package names', (v) => scopeRe.test(v) ? null : 'an npm scope like @acme (packages become @acme/entities) or scope+app like @acme/crm (packages become @acme/crm-entities). The scope must be an npm org you own when you publish.');
-const schema = await ask('schema', 'SQL schema name', (v) => schemaRe.test(v) ? null : 'lowercase + underscores, e.g. acme_crm (no leading __ — reserved)');
-const prefix = await ask('prefix', 'Entity name prefix', nonEmpty, 'e.g. Acme CRM — entities become "Acme CRM: Things"');
-const repo = await ask('repo', 'GitHub repository URL', (v) => /^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(v.replace(/\.git$/, '')) ? null : 'https://github.com/<org>/<repo>');
-const publisher = await ask('publisher', 'Publisher name', nonEmpty);
+const name = await ask('name', 'App id', (v) => appIdRe.test(v) ? null : 'lowercase letters/digits/hyphens, 3-64 chars, e.g. acme-crm', {
+  describe: 'Your app\'s permanent unique id (mj-app.json "name"). Identifies the app at\ninstall time forever — it should never change once published.',
+});
+const display = await ask('display', 'Display name', nonEmpty, {
+  describe: 'The human-readable name users see in MJ Explorer and MJ Central.',
+});
+const description = await ask('description', 'Description', (v) => v.length >= 10 && v.length <= 500 ? null : '10-500 characters', {
+  describe: 'One or two sentences on what the app does — shown in discovery listings.',
+});
+const scope = await ask('scope', 'npm package prefix', (v) => scopeRe.test(v) ? null : 'an npm scope like @acme-crm (=> @acme-crm/entities) or scope+app like @acme/crm (=> @acme/crm-entities)', {
+  def: `@${name}`,
+  describe: 'The prefix for this app\'s npm packages (replaces "@mj-sample-app").\nThe default — a scope named after your app — is the MJ template convention and\nworks for a standalone app. Change it if your org publishes several apps under\none npm org (e.g. @acme/crm => @acme/crm-entities, the BizApps shape).\nPublishing later requires owning the npm org.',
+});
+const schema = await ask('schema', 'SQL schema name', (v) => schemaRe.test(v) ? null : 'lowercase + underscores, e.g. acme_crm (no leading __ — reserved)', {
+  def: name.replace(/-/g, '_'),
+  describe: 'The dedicated database schema that will hold every table your app creates.\nThe default (your app id with underscores) keeps names traceable; change it\nonly to match your own DB conventions. Leading "__" is reserved for MJ.',
+});
+const prefix = await ask('prefix', 'Entity name prefix', nonEmpty, {
+  def: display,
+  describe: 'Stamped on your entity names ("Acme CRM: Customers") so they can never\ncollide with MJ core or other apps. The default (your display name) is right\nfor almost everyone — shorten it if your display name is long.',
+});
+const repo = await ask('repo', 'GitHub repository URL', (v) => /^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(v.replace(/\.git$/, '')) ? null : 'https://github.com/<org>/<repo>', {
+  describe: 'Where this repo will live on GitHub — used by `mj app install`, npm\nprovenance, and the CI repository-url validator.',
+});
+const publisher = await ask('publisher', 'Publisher name', nonEmpty, {
+  describe: 'Who ships this app — shown in the manifest\'s publisher block.',
+});
 const email = await ask('email', 'Publisher email', nonEmpty);
-const idMin = await ask('id-min', 'Entity ID range MIN', (v) => /^\d+$/.test(v) ? null : 'integer, e.g. 20000001');
-const idMax = await ask('id-max', 'Entity ID range MAX', (v) => /^\d+$/.test(v) && Number(v) > Number(idMin) ? null : `integer > ${idMin}`);
+const idMin = await ask('id-min', 'Entity ID range MIN', (v) => /^\d+$/.test(v) ? null : 'integer, e.g. 10000001', {
+  def: '10000001',
+  describe: 'An integer ID block reserved for this app\'s entities in __mj.SchemaInfo.\nThe default block is fine for a first app on a database — change it if another\napp already claims that range (ranges must never overlap).',
+});
+const idMax = await ask('id-max', 'Entity ID range MAX', (v) => /^\d+$/.test(v) && Number(v) > Number(idMin) ? null : `integer > ${idMin}`, {
+  def: String(Number(idMin) + 99998),
+});
 
 const repoUrl = repo.replace(/\.git$/, '');
 const repoName = repoUrl.split('/').pop();

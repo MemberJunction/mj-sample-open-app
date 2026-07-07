@@ -55,19 +55,22 @@ node scripts/init-template.mjs \
 
 ## The options
 
-| Flag | Prompt | What it should be | Rules / notes |
-|---|---|---|---|
-| `--name` | App id | The permanent unique id of your app — becomes `mj-app.json` `"name"` and must match the GitHub release/install identity forever | Lowercase letters, digits, hyphens; 3–64 chars (`acme-crm`) |
-| `--display` | Display name | The human-readable name shown in MJ Explorer and MJ Central | Free text (`Acme CRM`) |
-| `--description` | Description | One or two sentences about what the app does — shows in discovery | 10–500 characters |
-| `--scope` | npm package name prefix | What replaces `@mj-sample-app` in the five package names. Two shapes: a bare npm **scope** (`@acme` → `@acme/entities`) or scope+app (`@acme/crm` → `@acme/crm-entities`, the shape the shipped BizApps use). The scope must be an npm org you own when you publish ([publishing.md](publishing.md)) | Valid npm scope, optionally `/app-name` |
-| `--schema` | SQL schema name | Your app's dedicated database schema — every table you create lives here | Lowercase + underscores (`acme_crm`); names starting `__` are reserved for first-party MJ apps |
-| `--prefix` | Entity name prefix | The prefix stamped on your entity names (`Acme CRM: Customers`) so they can never collide with MJ core (`MJ: …`) or other apps. Written into both `mj.config.cjs` `NameRulesBySchema` and the SchemaInfo record — the script keeps them in agreement | Short human-readable phrase, no trailing colon (the `": "` is added by MJ) |
-| `--repo` | GitHub repository URL | Where this app lives — used for `mj app install`, npm provenance, and the CI validator (which derives its expected URL from this) | `https://github.com/<org>/<repo>` |
-| `--publisher` | Publisher name | Your organization — goes in the manifest's `publisher` block | Free text |
-| `--email` | Publisher email | Contact for the publisher block | Free text |
-| `--id-min` / `--id-max` | Entity ID range | The integer ID range reserved for this app's entities in `__mj.SchemaInfo`. Pick a block that does not overlap any other app installed alongside yours (e.g. `20000001`–`20099999`) | Integers, max > min |
-| `--yes` | — | Skip the confirmation prompt (for scripted use) | — |
+Prompts with a **default** show it in `[brackets]` — press Enter to accept.
+Defaults are derived from your earlier answers following MJ conventions.
+
+| Flag | Prompt | What it should be | Default | Rules / notes |
+|---|---|---|---|---|
+| `--name` | App id | The permanent unique id of your app — becomes `mj-app.json` `"name"` and must match the GitHub release/install identity forever | — | Lowercase letters, digits, hyphens; 3–64 chars (`acme-crm`) |
+| `--display` | Display name | The human-readable name shown in MJ Explorer and MJ Central | — | Free text (`Acme CRM`) |
+| `--description` | Description | One or two sentences about what the app does — shows in discovery | — | 10–500 characters |
+| `--scope` | npm package prefix | What replaces `@mj-sample-app` in the five package names. Two shapes: a bare npm **scope** (`@acme-crm` → `@acme-crm/entities`) or scope+app (`@acme/crm` → `@acme/crm-entities`, the shape the shipped BizApps use). The scope must be an npm org you own when you publish ([publishing.md](publishing.md)) | `@<app-id>` — the template's own convention; right for a standalone app. Change it when one npm org publishes several apps | Valid npm scope, optionally `/app-name` |
+| `--schema` | SQL schema name | Your app's dedicated database schema — every table you create lives here | `<app-id>` with `_` for `-` — keeps DB objects traceable to the app | Lowercase + underscores; names starting `__` are reserved for first-party MJ apps |
+| `--prefix` | Entity name prefix | The prefix stamped on your entity names (`Acme CRM: Customers`) so they can never collide with MJ core (`MJ: …`) or other apps. Written into both `mj.config.cjs` `NameRulesBySchema` and the SchemaInfo record — the script keeps them in agreement | Your display name — shorten it if that's long | Short human-readable phrase, no trailing colon (the `": "` is added by MJ) |
+| `--repo` | GitHub repository URL | Where this app lives — used for `mj app install`, npm provenance, and the CI validator (which derives its expected URL from this) | — | `https://github.com/<org>/<repo>` |
+| `--publisher` | Publisher name | Your organization — goes in the manifest's `publisher` block | — | Free text |
+| `--email` | Publisher email | Contact for the publisher block | — | Free text |
+| `--id-min` / `--id-max` | Entity ID range | The integer ID range reserved for this app's entities in `__mj.SchemaInfo`. Pick a block that does not overlap any other app installed alongside yours | `10000001` / min+99998 — fine for the first app on a database; move the block if another app claims it | Integers, max > min |
+| `--yes` | — | Skip the confirmation prompt (for scripted use) | — | — |
 
 One value you do **not** choose: the **SchemaInfo UUID**. The script generates
 it (`crypto.randomUUID()`) and pins it as the record's primary key. Once that
