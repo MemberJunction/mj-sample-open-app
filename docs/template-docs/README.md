@@ -4,6 +4,7 @@ Read in this order when starting from the template:
 
 | Doc | What it covers |
 |---|---|
+| [init-script.md](init-script.md) | The setup script (`npm run init`): what it does, every option, and what each should be |
 | [getting-started.md](getting-started.md) | The fill-in checklist: everything to rename, and your first dev loop |
 | [repo-setup.md](repo-setup.md) | Creating your repo from the template + setting up the `next`/`main` branches |
 | [linking-to-mj.md](linking-to-mj.md) | **Developing the app inside a MemberJunction checkout** (worktree linking) + when you need a database |

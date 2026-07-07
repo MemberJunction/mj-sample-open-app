@@ -8,7 +8,7 @@ comments mark every fill-in point.
 ## 0. The fast path — `npm run init`
 
 The setup script does this whole section for you: it prompts for your app's
-identity (or takes flags — see the header of `scripts/init-template.mjs`),
+identity (or takes flags — full option reference: [init-script.md](init-script.md)),
 rewrites every template identifier across the repo, activates
 `metadata/schema-info/` with a generated stable UUID, and prints the follow-up
 steps (`npm install` to regenerate the lockfile, build, repo setup). Review
