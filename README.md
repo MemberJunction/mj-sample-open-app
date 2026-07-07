@@ -88,6 +88,10 @@ and [docs/publishing.md](docs/template-docs/publishing.md).
 
 ## Documentation index
 
-Everything above in depth: [docs/README.md](docs/template-docs/README.md). The complete
+Everything above in depth: [docs/template-docs/README.md](docs/template-docs/README.md).
+The **MemberJunction development guide** — critical rules, entity/data
+patterns, CodeGen + migration rules, Angular conventions, style, testing —
+is [docs/claude/](docs/claude/README.md) (topic docs with a TOC, referenced
+from [CLAUDE.md](CLAUDE.md)). The complete
 what-belongs-in-an-app inventory (required vs optional, with the shipped
 first-party apps as exemplars): [plans/TEMPLATE-SPEC.md](plans/TEMPLATE-SPEC.md).
