@@ -5,6 +5,16 @@ Everything runs as-is (schema `sample_app`, packages `@mj-sample-app/*`), so you
 can try the whole loop first and rename after — or rename first. `TODO(template)`
 comments mark every fill-in point.
 
+## 0. The fast path — `npm run init`
+
+The setup script does this whole section for you: it prompts for your app's
+identity (or takes flags — see the header of `scripts/init-template.mjs`),
+rewrites every template identifier across the repo, activates
+`metadata/schema-info/` with a generated stable UUID, and prints the follow-up
+steps (`npm install` to regenerate the lockfile, build, repo setup). Review
+the result with `git diff` before committing. The checklist below is the
+manual equivalent — and the reference for what the script touched.
+
 ## 1. The rename checklist
 
 | What | Where | Notes |
