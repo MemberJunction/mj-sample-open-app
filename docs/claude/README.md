@@ -26,4 +26,4 @@ an agent can load) only the topic you need.
 **Where to start:** read 1 (rules), then 3 + 5 (the data + codegen mental
 model) — the rest as the work touches them. The repo-specific workflow
 (worktree linking, publishing, branching model) lives one level up in
-[`docs/`](../template-docs/README.md).
+[`docs/template-docs/`](../template-docs/README.md).

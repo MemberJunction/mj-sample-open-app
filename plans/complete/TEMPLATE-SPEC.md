@@ -87,6 +87,6 @@ REC for any app meant to be shared; REQUIRED for this template’s purpose:
 
 - **`apps/MJAPI` + `apps/MJExplorer` standalone harness** (all shipped apps
   carry one): omitted here in favor of worktree-linked development inside an
-  MJ checkout (docs/linking-to-mj.md). Copy the pair from `bizapps-common` if
+  MJ checkout (docs/template-docs/linking-to-mj.md). Copy the pair from `bizapps-common` if
   a repo later needs self-hosted dev.
 - `Demos/`, `archive/`, app-specific extras seen in individual repos.
