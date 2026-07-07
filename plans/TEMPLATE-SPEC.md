@@ -23,7 +23,7 @@ optional.
 | `.npmrc` | REC | `legacy-peer-deps=true` (Angular strict peer ranges). | all apps |
 | `.gitignore` | **REQ** | Must exclude `.env`, `node_modules`, `dist`, codegen scratch output. | this repo |
 | `README.md` | REC | Overview + doc index. | all apps |
-| `CLAUDE.md` | REC | Agent/developer guide: repo structure, critical rules, branch model, MJ patterns. Derived from MJ's own CLAUDE.md conventions, trimmed to app scope. | bizapps-common |
+| `CLAUDE.md` + `docs/claude/` | REC | Agent/developer guide: `CLAUDE.md` is a slim entrypoint (repo structure + this repo's hard rules) referencing `docs/claude/` — the MJ development rulebook split into topic docs with a TOC (adapted from MJ's own monolithic CLAUDE.md). | this repo |
 | `.vscode/` | OPT | Launch configs / settings. | bizapps-common |
 | `scripts/` (lifecycle hooks) | OPT | Only if the manifest declares `hooks`. | — |
 

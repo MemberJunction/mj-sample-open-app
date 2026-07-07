@@ -12,6 +12,10 @@ Read in this order when starting from the template:
 | [versioning-and-peer-deps.md](versioning-and-peer-deps.md) | How package versions and peer dependencies work (with the examples in this repo) |
 | [publishing.md](publishing.md) | Publishing to npm + GitHub releases; first-publish bootstrap; the no-breaking-changes policy |
 
-The **format reference** for the manifest is [`../mj-app.reference.jsonc`](../mj-app.reference.jsonc);
+The **MemberJunction development guide** (critical rules, entity/data
+patterns, CodeGen + migration authoring, Angular, style, testing — adapted
+from MJ's own `CLAUDE.md` into topic docs) is **[../claude/](../claude/README.md)**.
+
+The **format reference** for the manifest is [`../../mj-app.reference.jsonc`](../../mj-app.reference.jsonc);
 the **inventory of what a finished app contains** (required vs optional) is
-[`../plans/TEMPLATE-SPEC.md`](../plans/TEMPLATE-SPEC.md).
+[`../plans/TEMPLATE-SPEC.md`](../../plans/TEMPLATE-SPEC.md).
