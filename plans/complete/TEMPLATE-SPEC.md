@@ -15,7 +15,7 @@ optional.
 | Item | Level | Purpose / notes | Exemplar |
 |---|---|---|---|
 | `mj-app.json` | **REQ** | THE manifest. Identity fields required; every capability block (schema, migrations, metadata, packages, dependencies, hooks) is optional + additive. Version must match the GitHub release tag. | `mj-app.reference.jsonc` (annotated) |
-| `package.json` | **REQ** | npm workspace root: `workspaces: ["packages/*"]`, build/migrate/codegen/changeset/release scripts, root `overrides` pinning `@memberjunction/core`+`global`. Shipped apps also list `apps/*` — this template omits the standalone harness in favor of worktree linking (docs/linking-to-mj.md). | bizapps-common |
+| `package.json` | **REQ** | npm workspace root: `workspaces: ["packages/*"]`, build/migrate/codegen/changeset/release scripts, root `overrides` pinning `@memberjunction/core`+`global`. Shipped apps also list `apps/*` — this template omits the standalone harness in favor of worktree linking (docs/template-docs/linking-to-mj.md). | bizapps-common |
 | `package-lock.json` | REC | Committed lockfile (generated on first `npm install`); CI validates case-sensitivity. | all apps |
 | `mj.config.cjs` | **REQ\*** (codegen) | CodeGen + migrate config: `entityPackageName`, `output[]` paths into `packages/*`, post-gen build `commands`, `NameRulesBySchema` (entity-name prefix), `excludeSchemas`, `SQLOutput` (emit SQL for folding into migrations). No credentials — those live in `.env`. | this repo |
 | `turbo.json` | REC | Task graph (`build` with `^build` dependency + caching). | all apps |
@@ -87,6 +87,6 @@ REC for any app meant to be shared; REQUIRED for this template’s purpose:
 
 - **`apps/MJAPI` + `apps/MJExplorer` standalone harness** (all shipped apps
   carry one): omitted here in favor of worktree-linked development inside an
-  MJ checkout (docs/linking-to-mj.md). Copy the pair from `bizapps-common` if
+  MJ checkout (docs/template-docs/linking-to-mj.md). Copy the pair from `bizapps-common` if
   a repo later needs self-hosted dev.
 - `Demos/`, `archive/`, app-specific extras seen in individual repos.

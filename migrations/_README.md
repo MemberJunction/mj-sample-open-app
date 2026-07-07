@@ -2,7 +2,7 @@
 
 Applied in filename order against **your app's schema** at install/upgrade and
 during development. Once published, a migration is IMMUTABLE — never edit an
-applied file; add a new one (see PUBLISH_NO_BREAK policy in docs/publishing.md).
+applied file; add a new one (see PUBLISH_NO_BREAK policy in docs/template-docs/publishing.md).
 
 ## Naming
 
