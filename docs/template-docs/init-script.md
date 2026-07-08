@@ -40,6 +40,12 @@ SCHEMA NAME after the old one was pushed to a dev database, remember that
 database still holds the old row — drop the dev schema / clean it up before
 re-syncing. Review the diff before you commit.
 
+The prompts are grouped in three sections — **Identity** (name, display name,
+description), **Ownership** (first-party?, repo, publisher), **Naming** (npm
+prefix, schema, entity prefix) — and end with an `mj app info`-style review
+block before anything is written. Output follows the `mj` CLI conventions
+(sections, aligned key/values, `✓` progress lines; honors `NO_COLOR`).
+
 ## How to run it
 
 ```sh
@@ -93,8 +99,8 @@ Defaults are derived from your earlier answers following MJ conventions.
 | `--prefix` | Entity name prefix | The prefix stamped on your entity names (`Acme CRM: Customers`) so they can never collide with MJ core (`MJ: …`) or other apps. Written into both `mj.config.cjs` `NameRulesBySchema` and the SchemaInfo record — the script keeps them in agreement | Your display name — shorten it if that's long | Short human-readable phrase, no trailing colon (the `": "` is added by MJ) |
 | `--repo` | GitHub repository URL | Where this app lives — used for `mj app install`, npm provenance, and the CI validator (which derives its expected URL from this) | — | `https://github.com/<org>/<repo>` |
 | `--publisher` | Publisher name | Your organization — goes in the manifest's `publisher` block | — | Free text |
-| `--email` | Publisher email | Contact for the publisher block | — | Free text |
-| `--id-min` / `--id-max` | Entity ID range | The integer ID range reserved for this app's entities in `__mj.SchemaInfo`. Pick a block that does not overlap any other app installed alongside yours | `10000001` / min+99998 — fine for the first app on a database; move the block if another app claims it | Integers, max > min |
+| `--email` | Publisher email | Contact for the publisher block | first-party: `dev@memberjunction.com` | **Optional** (Enter to skip — the manifest only requires the publisher name) |
+| `--id-min` / `--id-max` | *(not prompted)* | Legacy `NOT NULL` bookkeeping columns in `__mj.SchemaInfo` that no runtime code reads (entity IDs are UUIDs) — the script writes defaults silently and preserves current values on re-runs | `10000001` / min+99998 | Flags only, for the rare case you care; integers, max > min |
 | `--first-party` / `--third-party` | First-party MemberJunction app? | Selects the default set (see section above) | `y` on a fresh template; inferred from the current schema on re-runs | Mutually exclusive booleans |
 | `--allow-reserved-schema` | — | Accept a `__`-prefixed schema non-interactively when NOT first-party | — | — |
 | `--yes` | — | Skip the confirmation prompt (for scripted use) | — | — |
