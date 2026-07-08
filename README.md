@@ -49,7 +49,7 @@ npm install && npm run build:packages     # no MJ checkout or DB needed
 
 ## Getting started
 
-1. **Run the setup script** — `npm run init` renames every template
+1. **Run the setup script** — `npm run setup` renames every template
    identifier to your app's values (id, display name, npm scope, schema,
    entity prefix, repo URL, publisher) and activates
    `metadata/schema-info/` with a freshly generated stable UUID. Review with

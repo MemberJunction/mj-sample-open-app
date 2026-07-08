@@ -8,7 +8,7 @@
  * current value as its default (press Enter to keep it). The pinned
  * SchemaInfo UUID is generated once and preserved forever.
  *
- *     npm run init
+ *     npm run setup
  *     # or non-interactive (any subset; missing flags prompt):
  *     node scripts/init-template.mjs \
  *       --name acme-crm --display "Acme CRM" \
@@ -317,4 +317,4 @@ console.log(`  3. ${cyan('npm run build:packages')}   ${gray('confirm all five p
 console.log(`  4. ${gray('branches + services:')} docs/template-docs/repo-setup.md`);
 console.log(`     ${gray('link into MJ:')}        docs/template-docs/linking-to-mj.md`);
 if (existingUuid) console.log('\n' + yellow('⚠ ') + gray('Schema renamed after a push? The old row remains in that dev DB — clean it\n  up (or drop the dev schema) before re-syncing.'));
-console.log(gray('\nRe-run `npm run init` any time — Enter keeps current values.\n'));
+console.log(gray('\nRe-run `npm run setup` any time — Enter keeps current values.\n'));

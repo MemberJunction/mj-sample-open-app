@@ -5,7 +5,7 @@ Everything runs as-is (schema `sample_app`, packages `@mj-sample-app/*`), so you
 can try the whole loop first and rename after — or rename first. `TODO(template)`
 comments mark every fill-in point.
 
-## 0. The fast path — `npm run init`
+## 0. The fast path — `npm run setup`
 
 The setup script does this whole section for you: it prompts for your app's
 identity (or takes flags — full option reference: [init-script.md](init-script.md)),

@@ -1,4 +1,4 @@
-# The setup script — `npm run init`
+# The setup script — `npm run setup`
 
 `scripts/init-template.mjs` turns this template into **your** app: it reads
 the repo's CURRENT identity, renames it to your answers, and activates the
@@ -49,8 +49,13 @@ block before anything is written. Output follows the `mj` CLI conventions
 ## How to run it
 
 ```sh
-npm run init          # interactive — prompts for each answer
+npm run setup          # interactive — prompts for each answer
+                       # (`npm run init` works too)
 ```
+
+> ⚠️ Note the **`run`**: plain `npm init` (without `run`) is npm's own
+> package.json wizard — it asks about entry points, licenses, and module
+> type, and rewrites `package.json`. Not this tool.
 
 or non-interactively (flags map 1:1 to the prompts; `--yes` skips the
 confirmation):
