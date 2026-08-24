@@ -34,8 +34,22 @@ you don't need — a manifest-only app is valid:
 
 - No database tables? Delete `schema` + `migrations` blocks, `migrations/`, and the DB steps below.
 - No server code? Delete `packages.server`, `packages/Server`, `packages/CoreEntitiesServer`, `packages/Actions`.
-- No UI? Delete `packages.client` + `packages/Angular`.
+- No UI? Delete `packages.client` + `packages/Angular`, plus the
+  `metadata/applications/` record (nothing to navigate to).
 - No seeded metadata? Delete the `metadata` block + `metadata/`.
+
+## 2a. The one page the scaffold ships
+
+`packages/Angular/src/lib/overview/overview.resource.ts` is a placeholder resource
+component, wired end to end: registered under the `DriverClass` that
+`metadata/applications/` points at, exported from `public-api.ts`, and anchored by
+`LoadSampleAppClient()`. It exists so the Explorer chain is **provable** rather than
+described — that chain fails silently, so a scaffold that never exercises it teaches
+nothing ([explorer-visibility.md](explorer-visibility.md)).
+
+Replace its template with your real landing page, or delete the file + the record if
+your app ships no UI. `pnpm run init` renames the class, the `DriverClass`, and the
+record (and mints a fresh Application UUID) for you.
 
 ## 3. First dev loop
 
