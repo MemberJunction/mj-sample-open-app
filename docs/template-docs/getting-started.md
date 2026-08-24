@@ -25,6 +25,7 @@ manual equivalent — and the reference for what the script touched.
 | Schema `sample_app` | `mj-app.json` `schema.name`, `mj.config.cjs` (`includeSchemas`, `NameRulesBySchema`, `SQLOutput.schemaPlaceholders`), root `package.json` `mj:migrate`/`mj:migrate:convert`, `metadata/schema-info/` (activate + fill the `.template` — see `docs/template-docs/metadata.md` § Schema registration) | Lowercase + underscores. `__`-prefixed names are reserved for first-party MJ apps |
 | Entity name prefix `Sample App: ` | `mj.config.cjs` + `metadata/schema-info/` (in the filled-out `.schema-info.json`) `EntityNamePrefix` | Prevents entity-name collisions across apps |
 | Bootstrap exports `LoadSampleAppServer` / `LoadSampleAppClient` | `mj-app.json` `startupExport`s ↔ `packages/Server/src/index.ts` / `packages/Angular/src/public-api.ts` | Must match exactly — this is how MJAPI/MJExplorer load your code |
+| Package versions | nothing to do | Everything ships at `0.0.0` on purpose — your first `minor` changeset makes it `0.1.0`. Never hand-edit a version ([publishing.md](publishing.md) § Where versions start) |
 | `mjVersionRange` | `mj-app.json` | Set to the MJ major you build against (the template ships `>=6.1.0-edge.3 <7.0.0` — MJ 6 is on `edge` prereleases, so the floor is the published version the packages pin); the release workflow re-derives it from your `@memberjunction/core` peer dep |
 
 ## 2. Decide which blocks you keep
