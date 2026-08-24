@@ -69,6 +69,42 @@ through a PR is the fix, not a permission.
 > would pass vacuously and a generated app would inherit gates that had never
 > actually run.
 
+## Where versions start (and why `0.0.0`)
+
+Every package in this template — and `mj-app.json` — ships at **`0.0.0`**, and the
+template's own packages are **never published**. `0.0.0` is not a placeholder to
+hand-edit: it is the number that makes the release machinery land on the right first
+version by itself.
+
+Your first real release should be **`0.1.0`**, and `changeset version` computes the next
+version from the current one. From `0.0.0`, the first `minor` changeset — which a first
+schema migration requires anyway (CI enforces it) — produces exactly `0.1.0`, with a real
+changelog entry and no version edited by hand. Had the template shipped `0.1.0`, that same
+changeset would produce `0.2.0`, and getting `0.1.0` out would mean publishing with no
+changeset and then reconciling the two by hand.
+
+It also lines up with the bootstrap below: `0.0.0` is the placeholder version you push to
+npm to enable trusted publishing, so the manifest and the registry agree from the start.
+
+So: **don't set a version manually.** Write changesets; the release flow owns the number.
+(Sibling packages are pinned at each other's exact version and move together — see
+[versioning-and-peer-deps.md](versioning-and-peer-deps.md).)
+
+## One-time setup for a new app (first publish bootstrap)
+
+npm refuses OIDC publishing for packages that don't exist yet, and the
+validation step fails until they do. So, once per package:
+
+1. **Publish a `0.0.0` placeholder manually** (with a classic npm token or
+   `npm login`): minimal `package.json` + `npm publish --access public`. This one
+   step uses the `npm` CLI on purpose — it is a registry operation, not a
+   workspace install, and `npm publish` is what npm's own docs describe.
+2. On npmjs.com, under each package → Settings → **Trusted Publisher**, add
+   this GitHub repo + the `publish.yml` workflow.
+3. From then on the workflow publishes via **OIDC trusted publishing** — there
+   is **no `NPM_TOKEN` secret** to create or rotate. (`publish.yml` already
+   declares `permissions: id-token: write`.)
+
 ## GitHub release tags
 
 `mj app install <repo>` resolves versions from **git tags** (`vX.Y.Z`) — the

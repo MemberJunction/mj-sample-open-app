@@ -22,7 +22,7 @@ Declare the bump in your PR with `pnpm exec changeset`.
 
 | Dependency on… | Declare as | Version spec | Why |
 |---|---|---|---|
-| A **sibling package of this app** (e.g. `@mj-sample-app/entities` from `Server`) | `dependencies` | **exact** (`1.0.0`) | Siblings ship in lock-step (fixed versioning); an exact pin means an install always gets the matched set |
+| A **sibling package of this app** (e.g. `@mj-sample-app/entities` from `Server`) | `dependencies` | **exact** (`0.0.0`) | Siblings ship in lock-step (fixed versioning); an exact pin means an install always gets the matched set. Under pnpm the pin must equal the sibling's local version or `linkWorkspacePackages` resolves it from the REGISTRY instead of linking — `changeset version` moves both together, so don't hand-edit one |
 | **`@memberjunction/*`** | `peerDependencies` | caret range (`^6.1.0-edge.3`) | The HOST provides MJ exactly once. A hard dep could nest a second copy of `@memberjunction/global`/`core`, which splits MJ's class-factory registry and silently breaks registration — the single-copy invariant |
 | **`@angular/*`** | `peerDependencies` | range (`>=21.0.0 <22.0.0`) | Same reasoning; the host Explorer owns the Angular version |
 | Ordinary libraries the package truly owns (e.g. `zod`) | `dependencies` | caret | Normal semver semantics |

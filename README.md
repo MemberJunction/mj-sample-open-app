@@ -5,8 +5,10 @@ A **blank-start template** for building
 rename a handful of identifiers, and start adding your schema, code, and
 metadata — every folder and config file is pre-wired to MJ's conventions and
 carries comments explaining what goes in it. It ships **no migrations, no
-generated code, and no build output**: the structure and guidance are here,
-the content is yours.
+generated code, and no build output** — the structure and guidance are here, the
+content is yours. The one exception is deliberate: a single placeholder page, wired
+all the way through to Explorer, because that wiring fails silently and is worth
+proving rather than describing.
 
 > **What an Open App is:** its manifest (`mj-app.json`) plus whatever optional
 > blocks it declares — a database schema + migrations, mj-sync metadata,
@@ -33,7 +35,7 @@ the content is yours.
 | `packages/CoreEntitiesServer` | Server-side entity overrides (validation, save hooks) | Optional |
 | `packages/Actions` | MJ Actions — agent/workflow integration points | Optional |
 | `packages/Server` | Server bootstrap — MJAPI imports it at startup and calls its `startupExport` | With server code |
-| `packages/Angular` | Client bootstrap — MJExplorer bundles it; your components + generated forms | With UI |
+| `packages/Angular` | Client bootstrap — MJExplorer bundles it; your components + generated forms. Ships **one placeholder page** wired end-to-end so the Explorer chain is provable | With UI |
 | `mj.config.cjs` | CodeGen/migrate configuration for this repo | **Required** for codegen |
 | `.github/workflows/` | CI: `build`, `changes` (migration + changeset gates), `publish` (npm via OIDC) | Recommended |
 | `.changeset/` + `ci/` | Fixed versioning + release pipeline helpers | Recommended |

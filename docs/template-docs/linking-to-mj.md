@@ -113,10 +113,11 @@ in the **MJ** repo, and both are local dev wiring you never commit to MJ (§5).
    }
    ```
    and add the package to `packages/MJAPI/package.json` dependencies:
-   `"@mj-sample-app/server": "1.0.0"`.
+   `"@mj-sample-app/server": "0.0.0"` (whatever version your packages currently
+   carry — the template starts at `0.0.0`).
 
 2. **Client (MJExplorer)** — only if you ship UI packages. Add
-   `"@mj-sample-app/ng": "1.0.0"` to `packages/MJExplorer/package.json`, and a
+   `"@mj-sample-app/ng": "0.0.0"` to `packages/MJExplorer/package.json`, and a
    static import to
    `packages/MJExplorer/src/app/generated/open-app-bootstrap.generated.ts`:
    ```ts

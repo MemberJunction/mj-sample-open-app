@@ -25,6 +25,7 @@ manual equivalent — and the reference for what the script touched.
 | Schema `sample_app` | `mj-app.json` `schema.name`, `mj.config.cjs` (`includeSchemas`, `NameRulesBySchema`, `SQLOutput.schemaPlaceholders`), root `package.json` `mj:migrate`/`mj:migrate:convert`, `metadata/schema-info/` (activate + fill the `.template` — see `docs/template-docs/metadata.md` § Schema registration) | Lowercase + underscores. `__`-prefixed names are reserved for first-party MJ apps |
 | Entity name prefix `Sample App: ` | `mj.config.cjs` + `metadata/schema-info/` (in the filled-out `.schema-info.json`) `EntityNamePrefix` | Prevents entity-name collisions across apps |
 | Bootstrap exports `LoadSampleAppServer` / `LoadSampleAppClient` | `mj-app.json` `startupExport`s ↔ `packages/Server/src/index.ts` / `packages/Angular/src/public-api.ts` | Must match exactly — this is how MJAPI/MJExplorer load your code |
+| Package versions | nothing to do | Everything ships at `0.0.0` on purpose — your first `minor` changeset makes it `0.1.0`. Never hand-edit a version ([publishing.md](publishing.md) § Where versions start) |
 | `mjVersionRange` | `mj-app.json` | Set to the MJ major you build against (the template ships `>=6.1.0-edge.3 <7.0.0` — MJ 6 is on `edge` prereleases, so the floor is the published version the packages pin); the release workflow re-derives it from your `@memberjunction/core` peer dep |
 
 ## 2. Decide which blocks you keep
@@ -34,8 +35,22 @@ you don't need — a manifest-only app is valid:
 
 - No database tables? Delete `schema` + `migrations` blocks, `migrations/`, and the DB steps below.
 - No server code? Delete `packages.server`, `packages/Server`, `packages/CoreEntitiesServer`, `packages/Actions`.
-- No UI? Delete `packages.client` + `packages/Angular`.
+- No UI? Delete `packages.client` + `packages/Angular`, plus the
+  `metadata/applications/` record (nothing to navigate to).
 - No seeded metadata? Delete the `metadata` block + `metadata/`.
+
+## 2a. The one page the scaffold ships
+
+`packages/Angular/src/lib/overview/overview.resource.ts` is a placeholder resource
+component, wired end to end: registered under the `DriverClass` that
+`metadata/applications/` points at, exported from `public-api.ts`, and anchored by
+`LoadSampleAppClient()`. It exists so the Explorer chain is **provable** rather than
+described — that chain fails silently, so a scaffold that never exercises it teaches
+nothing ([explorer-visibility.md](explorer-visibility.md)).
+
+Replace its template with your real landing page, or delete the file + the record if
+your app ships no UI. `pnpm run init` renames the class, the `DriverClass`, and the
+record (and mints a fresh Application UUID) for you.
 
 ## 3. First dev loop
 
