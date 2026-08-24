@@ -16,16 +16,16 @@ Bump sizes follow the content (CI + the publish workflow enforce/verify):
 | Breaking change (see publishing.md no-break policy) | **major** |
 | Code-only fix, no migration | patch |
 
-Declare the bump in your PR with `npx changeset`.
+Declare the bump in your PR with `pnpm exec changeset`.
 
 ## The three kinds of dependency (see the real examples in `packages/*/package.json`)
 
 | Dependency on… | Declare as | Version spec | Why |
 |---|---|---|---|
 | A **sibling package of this app** (e.g. `@mj-sample-app/entities` from `Server`) | `dependencies` | **exact** (`1.0.0`) | Siblings ship in lock-step (fixed versioning); an exact pin means an install always gets the matched set |
-| **`@memberjunction/*`** | `peerDependencies` | caret range (`^5.44.0`) | The HOST provides MJ exactly once. A hard dep could nest a second copy of `@memberjunction/global`/`core`, which splits MJ's class-factory registry and silently breaks registration — the single-copy invariant |
+| **`@memberjunction/*`** | `peerDependencies` | caret range (`^6.1.0-edge.3`) | The HOST provides MJ exactly once. A hard dep could nest a second copy of `@memberjunction/global`/`core`, which splits MJ's class-factory registry and silently breaks registration — the single-copy invariant |
 | **`@angular/*`** | `peerDependencies` | range (`>=21.0.0 <22.0.0`) | Same reasoning; the host Explorer owns the Angular version |
-| Ordinary libraries the package truly owns (e.g. `zod`) | `dependencies` | caret | Normal npm semantics |
+| Ordinary libraries the package truly owns (e.g. `zod`) | `dependencies` | caret | Normal semver semantics |
 | Build tooling (`typescript`, `@angular/compiler-cli`) | `devDependencies` | caret/pinned | Never shipped |
 
 Worked examples in this template:
@@ -37,7 +37,7 @@ Worked examples in this template:
 
 The root `package.json` pins `@memberjunction/core`/`@memberjunction/global`
 (and, if you add more Angular tooling, the `@angular/*` set) via `overrides` so
-a standalone `npm install` resolves ONE version tree. Bump these when you move
+a standalone `pnpm install` resolves ONE version tree. Bump these when you move
 to a new MJ release.
 
 ## `mjVersionRange`
