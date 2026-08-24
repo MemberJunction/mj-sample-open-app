@@ -39,8 +39,8 @@ per app. Worked example: [`../template-docs/metadata.md`](../template-docs/metad
 ## Commands
 
 ```sh
-npx mj-sync validate --dir=metadata          # validate before pushing
-npx mj sync push --dir=metadata --format=json  # push (non-interactive)
+pnpm exec mj-sync validate --dir=metadata          # validate before pushing
+pnpm exec mj sync push --dir=metadata --format=json  # push (non-interactive)
 ```
 
 Validation understands virtual properties, defaults, and reference integrity;

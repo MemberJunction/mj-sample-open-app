@@ -30,7 +30,7 @@ feature branch ──PR──▶ next ──(release PR)──▶ main ──(pu
 4. Open the PR against `next`. CI runs `build.yml` (compile) and `changes.yml`
    (migration filename/timestamp validation + changeset enforcement).
 5. If the PR adds a migration, it MUST include a changeset with at least a
-   **minor** bump (`npx changeset`) — CI fails otherwise.
+   **minor** bump (`pnpm exec changeset`) — CI fails otherwise.
 
 ## Releasing
 
@@ -39,7 +39,7 @@ feature branch ──PR──▶ next ──(release PR)──▶ main ──(pu
    changesets → build → npm publish → tag `vX.Y.Z` → commit the bump back to
    `main` → **automatically merge `main` into `next` and refresh the lockfile**.
 3. `next` is immediately ready for the next round. Never hand-author the
-   `chore: Update package-lock.json with vX.Y.Z dependencies` commit — the
+   `chore: Update pnpm-lock.yaml with vX.Y.Z dependencies` commit — the
    workflow owns it.
 
 ## Hotfixes

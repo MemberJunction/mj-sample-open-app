@@ -17,9 +17,9 @@ break — so the rules below are non-negotiable.
 
 You wrote a new migration (new table/column/constraint in your app schema):
 
-1. Apply it: `npx mj migrate --schema sample_app --dir <path-to>/migrations`
+1. Apply it: `pnpm run mj:migrate`
    (from the MJ repo root when linked — see linking-to-mj.md).
-2. Run CodeGen: `npx mj codegen`. It will:
+2. Run CodeGen: `pnpm run mj:codegen`. It will:
    - add the system columns (`__mj_CreatedAt`/`__mj_UpdatedAt`) + FK indexes
      you deliberately did NOT put in the migration,
    - regenerate entity subclasses / resolvers / forms into `packages/*/src/generated/`,
@@ -31,7 +31,7 @@ You wrote a new migration (new table/column/constraint in your app schema):
    `spUpdateExisting…FromSchema` refresh calls — CodeGen re-applies those
    automatically on every instance (that's exactly why your migrations must
    not contain them).
-4. Build (`npx turbo build --filter="@mj-sample-app/*"`), then **commit the
+4. Build (`pnpm run build:packages`), then **commit the
    migration + all regenerated code together** with a changeset (≥ minor).
 
 Only THEN write TypeScript against the new fields — the generated types now
@@ -41,7 +41,7 @@ exist, so you get strong typing instead of stringly-typed access.
 
 You edited records under `metadata/` (applications, lookup seeds, actions...):
 
-1. Push it to your dev database: `npx mj sync push --dir=metadata --format=json`.
+1. Push it to your dev database: `pnpm exec mj sync push --dir=metadata --format=json`.
    `mj sync push` is a **single-author, dev-time tool**: it reconciles YOUR
    files into YOUR database. It is not how teammates or consumers receive
    metadata — migrations are.

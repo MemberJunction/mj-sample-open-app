@@ -9,7 +9,7 @@
  * later and change just one thing (e.g. the npm scope before first publish)
  * without touching the rest. The pinned SchemaInfo UUID is preserved forever.
  *
- *     npm run init
+ *     pnpm run init
  *     # or non-interactive (any subset; missing flags prompt):
  *     node scripts/init-template.mjs \
  *       --name acme-crm --display "Acme CRM" \
@@ -245,7 +245,10 @@ if (!args.yes) {
 rl.close();
 
 // ---------- apply replacements over tracked text files -----------------------
-const SKIP = new Set(['scripts/init-template.mjs']);
+// mj-app.reference.jsonc is a verbatim copy of MJ's annotated reference manifest —
+// documentation, never read by a tool. Renaming inside it would only make it diverge
+// from upstream, so it is skipped along with this script itself.
+const SKIP = new Set(['scripts/init-template.mjs', 'mj-app.reference.jsonc']);
 const files = execFileSync('git', ['ls-files'], { encoding: 'utf8' }).split('\n').filter(Boolean)
   .filter(f => !SKIP.has(f) && existsSync(f) && statSync(f).isFile());
 let changed = 0;
@@ -282,8 +285,8 @@ console.log(`
 
 Next steps:
   1. Review:   git diff
-  2. Lockfile: npm install        (required if the scope or app id changed)
-  3. Build:    npm run build:packages
+  2. Lockfile: pnpm install       (required if the scope or app id changed)
+  3. Build:    pnpm run build:packages
   4. First run? Branches + services: docs/template-docs/repo-setup.md
      and link into MJ:              docs/template-docs/linking-to-mj.md
 ${existingUuid ? '\nNOTE: the SchemaInfo UUID was preserved. If you changed the SCHEMA NAME and\nthe old schema was already pushed to a database, that database keeps the old\nrow — clean it up (or drop the dev schema) before re-syncing.' : '\nThe SchemaInfo UUID above is now pinned — never change it once pushed to any\ndatabase.'}

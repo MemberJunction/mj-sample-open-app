@@ -22,8 +22,10 @@
  *   export { <YourEntity>FormComponent } from './lib/generated/Entities/<YourEntity>/<yourentity>.form.component';
  *
  * HAND-WRITTEN COMPONENT EXAMPLE — a resource component that renders as a tab
- * in MJ Explorer (its DriverClass must match a DefaultNavItems entry in your
- * application metadata — see docs/template-docs/metadata.md):
+ * in MJ Explorer. Its DriverClass string must match a DefaultNavItems entry in
+ * metadata/applications/ EXACTLY; a mismatch renders an empty tab with no error.
+ * The full visibility chain (component -> registration -> bundle -> nav item ->
+ * user access) is docs/template-docs/explorer-visibility.md:
  *
  *   import { Component } from '@angular/core';
  *   import { RegisterClass } from '@memberjunction/global';
@@ -38,7 +40,13 @@
  *   export class SampleAppDashboardComponent extends BaseResourceComponent {
  *     async GetResourceDisplayName(data: ResourceData): Promise<string> { return 'Sample App'; }
  *     async GetResourceIconClass(data: ResourceData): Promise<string> { return 'fa-solid fa-cube'; }
+ *
+ *     // ALWAYS signal completion — Explorer shows a loading state until you do:
+ *     ngOnInit(): void { this.NotifyLoadComplete(); }
  *   }
+ *
+ * ...and export it from this file, or the bundler tree-shakes it away and the
+ * decorator never runs.
  *
  * NOTE: package.json already carries the peer deps the generated forms will
  * import (@angular/forms, ng-base-forms, ng-entity-viewer, ng-link-directives)

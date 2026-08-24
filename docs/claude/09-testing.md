@@ -9,10 +9,10 @@ a stubbed test passing vacuously is a latent failure wearing a green light.
 ## Running
 
 ```sh
-npm test                                   # all packages (turbo, cached)
-cd packages/X && npm run test              # one package
-npm run test:watch                         # watch mode (per package)
-npx turbo run test --filter=...[HEAD~1]    # only changed packages
+pnpm test                                  # all packages (turbo, cached)
+pnpm --filter <pkg> run test               # one package
+pnpm --filter <pkg> run test:watch         # watch mode (per package)
+pnpm exec turbo run test --filter=...[HEAD~1]    # only changed packages
 ```
 
 ## Writing
