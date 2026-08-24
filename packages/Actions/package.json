@@ -4,6 +4,8 @@
   "type": "module",
   "description": "MJ Actions exposed by this app (generated subclasses + hand-written actions). TODO(template): rename.",
   "main": "dist/index.js",
+  "files": ["/dist"],
+  "publishConfig": { "access": "public" },
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && tsc-alias -f",
