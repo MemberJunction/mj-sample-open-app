@@ -1,9 +1,11 @@
 {
   "name": "@mj-sample-app/core-entities-server",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "description": "Server-side entity subclass overrides (validation, computed fields, save hooks). TODO(template): rename.",
   "main": "dist/index.js",
+  "files": ["/dist"],
+  "publishConfig": { "access": "public" },
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && tsc-alias -f",
@@ -15,7 +17,7 @@
   },
   "license": "BUSL-1.1",
   "dependencies": {
-    "@mj-sample-app/entities": "1.0.0"
+    "@mj-sample-app/entities": "0.0.0"
   },
   "peerDependencies": {
     "@memberjunction/core": "^6.1.0-edge.3",
