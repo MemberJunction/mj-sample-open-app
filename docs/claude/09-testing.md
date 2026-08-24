@@ -42,3 +42,9 @@ describe('MyClass', () => {
   to fix (renames, changed signatures/returns, new required params — all of it).
 - Every PR must be green in CI before merge.
 - Report results honestly: pass/fail/skip counts, and what wasn't run.
+
+
+## MJ's deep-dive guides
+
+- [`guides/ANGULAR_TESTING_GUIDE.md`](https://github.com/MemberJunction/MJ/blob/next/guides/ANGULAR_TESTING_GUIDE.md) — testing Angular components the way MJ does
+- [`guides/INTEGRATION_TESTING_QUICKSTART.md`](https://github.com/MemberJunction/MJ/blob/next/guides/INTEGRATION_TESTING_QUICKSTART.md) — MJ's integration-test framework, including the config seam an app uses to register its own check bundles

@@ -67,3 +67,12 @@ verify before each release PR that no metadata change is missing its migration.
   excludes `__mj` and system schemas; keep it that way.
 - Use hardcoded UUIDs in migration metadata inserts (`NEWID()` breaks
   reproducibility across installs).
+
+
+## MJ's own reference
+
+MJ's version of this loop — the source of the convention this page describes — is
+[`guides/MIGRATION_CODEGEN_WORKFLOW_GUIDE.md`](https://github.com/MemberJunction/MJ/blob/next/guides/MIGRATION_CODEGEN_WORKFLOW_GUIDE.md).
+Generating PostgreSQL variants adds
+[`guides/POSTGRES_SCHEMA_CASING_GUIDE.md`](https://github.com/MemberJunction/MJ/blob/next/guides/POSTGRES_SCHEMA_CASING_GUIDE.md) and
+[`guides/PG_MIGRATION_GLOSSARY.md`](https://github.com/MemberJunction/MJ/blob/next/guides/PG_MIGRATION_GLOSSARY.md).

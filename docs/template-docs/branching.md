@@ -46,3 +46,7 @@ feature branch ──PR──▶ next ──(release PR)──▶ main ──(pu
 
 A genuine emergency can PR straight to `main`; the publish workflow's
 merge-back brings the fix into `next` automatically. Prefer the normal path.
+
+
+MJ's own release-line conventions, for when this app's cadence has to line up with an MJ
+release: [`guides/RELEASE_ENGINEERING_RUNBOOK.md`](https://github.com/MemberJunction/MJ/blob/next/guides/RELEASE_ENGINEERING_RUNBOOK.md).

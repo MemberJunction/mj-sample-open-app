@@ -47,3 +47,7 @@ Validation understands virtual properties, defaults, and reference integrity;
 `push` runs it automatically. Remember: `mj sync push` is a **single-author,
 dev-time** tool — teammates and installs receive metadata via migrations, not
 by running sync.
+
+
+MJ's own reference for the sync tool, every field and flag, is
+[`packages/MetadataSync/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/MetadataSync/README.md).

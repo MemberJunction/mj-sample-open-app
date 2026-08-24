@@ -15,10 +15,14 @@ proving rather than describing.
 > server packages loaded by MJAPI, and client packages bundled into
 > MJExplorer. Everything is additive; a manifest-only app is valid.
 >
-> **The authoritative format reference** is MemberJunction's own Open App
-> README — read it alongside this template:
-> - GitHub: <https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/README.md>
-> - In an MJ checkout (current path): `packages/OpenApp/README.md`
+> **The authoritative references live in the MJ repo** — read them alongside this template
+> (prefer the copies in your own MJ checkout, which are version-matched to the MJ you run):
+> - [`packages/OpenApp/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/README.md) — the Open App format itself: manifest, lifecycle, install/upgrade/remove, package roles
+> - [`packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md) — what counts as breaking once you have published
+> - [`guides/BUILDING_APPS_ON_MJ.md`](https://github.com/MemberJunction/MJ/blob/next/guides/BUILDING_APPS_ON_MJ.md) — building *on* MJ generally, beyond the Open App packaging
+> - [`guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md`](https://github.com/MemberJunction/MJ/blob/next/guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md) — the linking model `mj dev workspace` implements
+> - [`CLAUDE.md`](https://github.com/MemberJunction/MJ/blob/next/CLAUDE.md) — MJ's development rulebook, inlined into this repo's own `CLAUDE.md` via `@`-import when a checkout is beside it
+> - [`guides/README.md`](https://github.com/MemberJunction/MJ/blob/next/guides/README.md) — the index of every MJ guide, when you need one this list doesn't name
 >
 > The annotated manifest reference is copied into this repo as
 > [`mj-app.reference.jsonc`](mj-app.reference.jsonc).

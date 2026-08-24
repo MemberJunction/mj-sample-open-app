@@ -188,7 +188,8 @@ tag (step 4 guarantees it).
 Within a published **major** version, schema changes must be **additive only**:
 no dropping tables/columns, no narrowing types, no renames, no new required
 parameters. Anything breaking forces a **major** bump. Consult MemberJunction's
-`packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md` before authoring any migration
+[`packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md)
+before authoring any migration
 that touches an existing published schema — upgraders run only your NEW
 migrations, never a rebuild.
 

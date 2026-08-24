@@ -3,8 +3,11 @@
 //
 // Verbatim copy of `packages/OpenApp/Engine/manifest.reference.jsonc` from the MJ
 // repo (kept schema-valid there by a unit test, so it cannot drift from the
-// validator). It is copied in for convenience; MJ's copy is authoritative. Refresh
-// it with:
+// validator). It is copied in for convenience; MJ's copy is authoritative:
+//
+//     https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/Engine/manifest.reference.jsonc
+//
+// Refresh it with:
 //
 //     cp <MJ-checkout>/packages/OpenApp/Engine/manifest.reference.jsonc mj-app.reference.jsonc
 //

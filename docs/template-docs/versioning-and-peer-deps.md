@@ -85,3 +85,9 @@ manifest honest.
 2. Re-run the loop (migrate → codegen → build) against an MJ instance of that
    version; commit regenerated code.
 3. Changeset: minor (or major if you drop support for an older MJ).
+
+
+## MJ's own references
+
+- [`guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md`](https://github.com/MemberJunction/MJ/blob/next/guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md) — the peer-declaration doctrine this page follows (libraries declare framework peers as ranges; consumers anchor the concrete version) and the single-copy census it exists to keep clean
+- [`packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md) — what makes a change breaking, i.e. when a bump has to be major
