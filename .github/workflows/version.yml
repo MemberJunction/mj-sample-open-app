@@ -69,8 +69,10 @@ jobs:
           version: pnpm run version:ci
           title: 'chore(release): version packages'
           commit: 'chore(release): version packages'
-          # NOTE: with the default GITHUB_TOKEN, PRs this action opens do NOT trigger other
-          # workflows (GitHub's anti-recursion rule), so build.yml will not run on the
-          # Version Packages PR and `--frozen-lockfile` goes unverified until merge. Swap in
-          # a GitHub App token to fix that — App-created PRs do trigger workflows.
+          # NOTE: with the default GITHUB_TOKEN, checks on the Version Packages PR do not
+          # start on their own — they sit awaiting approval, and a maintainer clicks
+          # "Approve and run" on the PR. Verified in bizapps-contracts, where approving the
+          # run produced a green build-only / release-readiness / changes on the version PR.
+          # One click per version PR, not a dead end. A GitHub App token removes the click:
+          # App-created PRs trigger workflows normally.
           github-token: ${{ secrets.GITHUB_TOKEN }}
