@@ -35,7 +35,7 @@ on feature PRs.
 
 | Service | What to set up | Doc |
 |---|---|---|
-| npm | Org/scope for your packages; publish `0.0.0` placeholders; configure **Trusted Publisher** per package | [publishing.md](publishing.md) |
+| npm | Own the org/scope; publish a `0.0.0` placeholder for each package (a package must exist before it can be configured, and CI refuses to publish until they all do); configure **Trusted Publisher** per package | [publishing.md](publishing.md) § first publish bootstrap |
 | GitHub Actions | Ships enabled; workflows live in `.github/workflows/` | [publishing.md](publishing.md) |
 | GitHub Releases | The publish workflow tags `vX.Y.Z`; `mj app install` resolves versions from these tags | [publishing.md](publishing.md) |
 
