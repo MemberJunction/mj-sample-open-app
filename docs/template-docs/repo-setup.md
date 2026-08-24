@@ -41,6 +41,6 @@ on feature PRs.
 
 ## 5. Local prerequisites
 
-Node ≥ 18, npm ≥ 10. A SQL Server database is only needed once you develop
+Node ≥ 18 and pnpm ≥ 10 (`corepack pnpm --version`; this repo and MJ 6.x are pnpm monorepos). A SQL Server database is only needed once you develop
 schema/metadata against a MemberJunction instance — see
 [linking-to-mj.md](linking-to-mj.md) for exactly when.

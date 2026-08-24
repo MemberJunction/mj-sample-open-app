@@ -19,7 +19,7 @@ Trigger: push to `main` (i.e. merging the release PR from `next`).
    derived from the `@memberjunction/core` peer dep.
 5. Builds all packages, then `changeset publish` → **npm**.
 6. Tags `vX.Y.Z`, pushes the version-bump commit back to `main`.
-7. Merges `main` → `next` and refreshes `package-lock.json` there.
+7. Merges `main` → `next` and refreshes `pnpm-lock.yaml` there.
 
 ## One-time setup for a new app (first publish bootstrap)
 
@@ -27,7 +27,9 @@ npm refuses OIDC publishing for packages that don't exist yet, and the
 validation step fails until they do. So, once per package:
 
 1. **Publish a `0.0.0` placeholder manually** (with a classic npm token or
-   `npm login`): minimal `package.json` + `npm publish --access public`.
+   `npm login`): minimal `package.json` + `npm publish --access public`. This one
+   step uses the `npm` CLI on purpose — it is a registry operation, not a
+   workspace install, and `npm publish` is what npm's own docs describe.
 2. On npmjs.com, under each package → Settings → **Trusted Publisher**, add
    this GitHub repo + the `publish.yml` workflow.
 3. From then on the workflow publishes via **OIDC trusted publishing** — there

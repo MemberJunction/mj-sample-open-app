@@ -63,7 +63,7 @@ auth-provider tokens and truly throwaway state.
 
 ## Always run and update unit tests
 Modifying a package means running that package's tests before you're done
-(`cd packages/X && npm run test`). Tests broken by your change are yours to
+(`pnpm --filter <pkg> run test`). Tests broken by your change are yours to
 update; tests broken for other reasons are yours to fix. Report pass/fail/skip
 counts honestly.
 

@@ -1,14 +1,25 @@
 # <Your App> — development guide (template)
 
 This repository is a **MemberJunction Open App** built from the
-mj-sample-open-app template. It is developed **linked inside a MemberJunction
-checkout** — see `docs/template-docs/linking-to-mj.md`. TODO(template): replace the
-placeholders in this file when you rename the app.
+MemberJunction **open-app-template**. It is developed **linked to a
+MemberJunction checkout** — the two clones are joined into one pnpm workspace by
+`mj dev workspace`; see `docs/template-docs/linking-to-mj.md`. TODO(template):
+replace the placeholders in this file when you rename the app.
+
+**Package manager: pnpm** (`corepack pnpm --version`, ≥ 10) — matching MJ 6.x,
+which is a pnpm monorepo. `pnpm-lock.yaml` is the lockfile of record;
+`package-lock.json` is gitignored so a stray `npm install` cannot leave a second
+one behind. Two pnpm/npm differences that fail *silently*: selecting one package
+is `pnpm --filter <pkg> run build` (npm's `--workspace` flag makes pnpm run the
+script at the repo ROOT instead), and `pnpm run x -- --flag` passes `--` through
+as a literal argument (drop the `--`).
 
 ## Repository structure
 
 ```
 mj-app.json            - MJ Open App manifest (the source of truth for the app)
+mj.config.cjs          - CodeGen config: output paths, schema scope, SQL capture
+pnpm-workspace.yaml    - pnpm workspace + resolution settings (see .npmrc)
 migrations/            - Skyway migrations for the app schema (starts empty)
 metadata/              - mj-sync metadata (dev-time; seeds ship as migrations)
 packages/
@@ -55,22 +66,28 @@ covered there). Read the relevant topic before working in its area:
    `origin/<same-name>` only; PRs target `next`; a PR adding a migration must
    include a changeset (≥ minor). See `docs/template-docs/branching.md`.
 5. **Single-copy invariant** — `@memberjunction/*` are peerDependencies; never
-   hard-depend on them, never `npm install` inside subfolders of a linked MJ
-   workspace (`docs/template-docs/versioning-and-peer-deps.md`).
-6. **When linked into MJ**: the wiring edits in the MJ repo (root
-   `package.json`, `mj.config.cjs`, MJAPI/MJExplorer `package.json`, bootstrap
-   import, lockfile) are local-only — never commit them to MJ.
+   hard-depend on them, and never run an install *inside* a member of a linked
+   workspace (installs happen at the workspace parent). A second physical copy of
+   `@memberjunction/global`/`core` splits MJ's class-factory registry and your
+   entities/resolvers silently stop appearing
+   (`docs/template-docs/versioning-and-peer-deps.md`).
+6. **When linked to MJ**: the *registration* edits in the MJ repo
+   (`mj.config.cjs` `dynamicPackages`, MJAPI/MJExplorer `package.json`, the
+   Explorer bootstrap import) are local-only — never commit them to MJ. The
+   *linking* files are generated at the workspace parent, outside both repos, and
+   are never committed anywhere.
 
 ## Build & dev commands
 
 ```sh
-# linked (from the MJ repo root — the normal mode):
-npx turbo build --filter="@mj-sample-app/*"
-npx mj migrate --schema sample_app --dir packages/dev-apps/mj-sample-open-app/migrations
-npx mj codegen
+# this repo (works standalone AND as a workspace member):
+pnpm install                  # at the WORKSPACE PARENT when linked; here when standalone
+pnpm run build:packages       # build this app's packages
+pnpm run mj:migrate           # apply this app's migrations (needs a DB + .env)
+pnpm run mj:codegen           # regenerate entities/resolvers/forms after a schema change
 
-# standalone smoke build (no DB):
-npm install && npm run build:packages
+# one package only (from the workspace root):
+pnpm --filter @mj-sample-app/ng run build
 ```
 
 The full development workflow (where to add code, capturing codegen +
