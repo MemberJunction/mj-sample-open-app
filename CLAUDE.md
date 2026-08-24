@@ -1,10 +1,36 @@
 # <Your App> — development guide (template)
 
-This repository is a **MemberJunction Open App** built from the
-MemberJunction **open-app-template**. It is developed **linked to a
-MemberJunction checkout** — the two clones are joined into one pnpm workspace by
-`mj dev workspace`; see `docs/template-docs/linking-to-mj.md`. TODO(template):
+This repository is an **open app** built on top of the
+[MemberJunction](https://github.com/MemberJunction/MJ) platform. TODO(template):
 replace the placeholders in this file when you rename the app.
+
+**MemberJunction's own `CLAUDE.md` is the authoritative guide — read it first.** The
+`@`-imports below inline it into context; only the path matching this repo's topology
+resolves, the others are inert. Prefer either over
+[GitHub](https://github.com/MemberJunction/MJ/blob/next/CLAUDE.md) — the local copy is
+version-matched to the MJ this repo actually runs against.
+
+@../mj/CLAUDE.md
+@../../../CLAUDE.md
+
+*(`../mj/` = a sibling MJ checkout — both the MJ 6.x parent workspace `mj dev workspace`
+generates and mjdev's instance layout, where this repo is a flat sibling of `mj/`.
+`../../../` = legacy nested 5.x, `<instance>/mj/packages/dev-apps/<app>/`.)*
+
+⚠️ **Both paths are literal, so the sibling case depends on the directory name: clone MJ
+as `mj`.** `git clone https://github.com/MemberJunction/MJ` produces `MJ/`, which resolves
+on a case-insensitive filesystem (macOS) and **silently does not** on Linux/CI — the guide
+just never loads, with nothing to notice. Either clone it as `mj`
+(`git clone …/MJ.git mj`) or add your own path as a third `@`-import line above.
+
+MJ's guide is MJ-repo-centric — "the repo root" always means *MJ's* root. How **this** app
+plugs into MJ's extension points is documented here, and the seam that matters most is the
+one MJ's guide never mentions: how a resource component reaches Explorer's app switcher
+([`docs/template-docs/explorer-visibility.md`](docs/template-docs/explorer-visibility.md)).
+
+It is developed **linked to a MemberJunction checkout** — the two clones are joined into
+one pnpm workspace by `mj dev workspace`; see
+[`docs/template-docs/linking-to-mj.md`](docs/template-docs/linking-to-mj.md).
 
 **Package manager: pnpm** (`corepack pnpm --version`, ≥ 10) — matching MJ 6.x,
 which is a pnpm monorepo. `pnpm-lock.yaml` is the lockfile of record;
@@ -32,14 +58,18 @@ docs/                  - how this repo works (branching, publishing, codegen, li
 docs/claude/           - the MemberJunction development guide (topic-split, with TOC)
 ```
 
-## 📖 The MemberJunction development guide → [`docs/claude/`](docs/claude/README.md)
+## 📖 The MJ rulebook, distilled → [`docs/claude/`](docs/claude/README.md)
 
-The MJ coding rulebook — critical rules, entity/data patterns, performance,
-CodeGen + migration authoring, Angular conventions, code style, metadata
-authoring, testing — lives in **[docs/claude/](docs/claude/README.md)** as a
-set of topic docs with a table of contents (adapted from MemberJunction's own
-`CLAUDE.md`; MJ's copy remains authoritative for MJ-core work and anything not
-covered there). Read the relevant topic before working in its area:
+**[docs/claude/](docs/claude/README.md)** is an app-repo-focused distillation of MJ's
+`CLAUDE.md`, split into topics with a TOC, each ending in links to MJ's own deep-dive
+guides on GitHub. It exists for the case the `@`-imports above cannot cover — a bare clone
+with no MJ checkout beside it (CI, a fresh machine, a reviewer reading on GitHub) — and
+because it is scoped to what an *app* author needs rather than what an MJ-core contributor
+needs.
+
+**MJ's copy stays authoritative.** Where the two disagree, MJ wins; when a checkout is
+present the `@`-import above has already put MJ's real guide in context. Read the relevant
+topic before working in its area:
 
 | Topic | Doc |
 |---|---|

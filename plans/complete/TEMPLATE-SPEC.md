@@ -2,7 +2,8 @@
 
 What a MemberJunction Open App repository contains, what each piece is for,
 and whether it's required. Derived from the authoritative format reference
-(MJ `packages/OpenApp/README.md` + `Engine/manifest.reference.jsonc`) and the
+([MJ `packages/OpenApp/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/README.md) +
+[`Engine/manifest.reference.jsonc`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/Engine/manifest.reference.jsonc)) and the
 shipped first-party apps (`bizapps-common`, `bizapps-accounting`,
 `bizapps-tasks`, `bizapps-forms`), which all converge on this shape.
 
@@ -74,7 +75,7 @@ Universal package rules: `main: dist/...`, `types`, `repository.url`
   publishes). Feature branches: cut from `next`, named `feature/<desc>`, track
   `origin/<same-name>` only. Release = one coordinating PR `next` → `main`.
 - Within a published major: **additive-only** schema changes
-  (MJ `packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md`).
+  ([MJ `packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md)).
 
 ## 6. Documentation set (docs/)
 

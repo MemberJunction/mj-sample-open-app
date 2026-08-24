@@ -209,3 +209,10 @@ push as a distribution mechanism.
   matching the pattern in a registered folder WILL be pushed.
 - If a record implies codegen output (new entities/fields), run the codegen
   loop too and commit it all together.
+
+
+## MJ's own reference
+
+Every field, flag and file-format detail of the sync tool is in
+[`packages/MetadataSync/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/MetadataSync/README.md) — that is the
+authority when this page and the tool disagree.

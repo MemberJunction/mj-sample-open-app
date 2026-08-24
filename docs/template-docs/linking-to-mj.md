@@ -6,9 +6,9 @@ schema lives in an MJ database. For day-to-day development you therefore
 *link* this repo to a local MJ checkout so both resolve **one** copy of every
 `@memberjunction/*` package.
 
-**Two things that sound like one, and are not** (MJ's own linking spec calls this
-the foundational axiom — `guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md` in an MJ
-checkout):
+**Two things that sound like one, and are not** — MJ's own linking spec calls this its
+foundational axiom:
+[`guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md`](https://github.com/MemberJunction/MJ/blob/next/guides/OPEN_APP_WORKSPACE_LINKING_SPEC.md):
 
 | | What it does | How you do it |
 |---|---|---|
@@ -37,9 +37,15 @@ inside MJ. Put both checkouts side by side under a plain parent directory
 
 ```
 ~/code/mj-work/                 <- the parent; workspace files are generated HERE
-├─ MJ/                          <- your MemberJunction checkout
+├─ mj/                          <- your MemberJunction checkout
 └─ open-app-template/           <- this repo (rename to your app)
 ```
+
+**Clone MJ as `mj`, lowercase** — `git clone https://github.com/MemberJunction/MJ.git mj`.
+Two things key off that name: mjdev's instance layout uses `mj/`, and this repo's
+`CLAUDE.md` inlines MJ's own guide with `@../mj/CLAUDE.md`. A checkout named `MJ/` works on
+macOS (case-insensitive) and silently fails to load the guide on Linux/CI. The workspace
+tooling itself does not care — this is purely about those literal paths.
 
 Then, from either checkout (the CLI ships in this repo's dev dependencies —
 run the **workspace** copy, not a globally installed `mj`):

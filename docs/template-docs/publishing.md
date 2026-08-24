@@ -92,18 +92,90 @@ So: **don't set a version manually.** Write changesets; the release flow owns th
 
 ## One-time setup for a new app (first publish bootstrap)
 
-npm refuses OIDC publishing for packages that don't exist yet, and the
-validation step fails until they do. So, once per package:
+**You do this once, by hand, before the automated flow can ever work — and the version
+you push is `0.0.0`, the same version this repo ships.** Two facts force it:
 
-1. **Publish a `0.0.0` placeholder manually** (with a classic npm token or
-   `npm login`): minimal `package.json` + `npm publish --access public`. This one
-   step uses the `npm` CLI on purpose — it is a registry operation, not a
-   workspace install, and `npm publish` is what npm's own docs describe.
-2. On npmjs.com, under each package → Settings → **Trusted Publisher**, add
-   this GitHub repo + the `publish.yml` workflow.
-3. From then on the workflow publishes via **OIDC trusted publishing** — there
-   is **no `NPM_TOKEN` secret** to create or rotate. (`publish.yml` already
-   declares `permissions: id-token: write`.)
+- **npm's trusted publishing (OIDC) is configured per package, and a package must exist
+  before it can be configured.** There is no way to grant a workflow permission to create
+  a name that isn't there yet — the setting lives on the package page.
+- **`publish.yml` refuses to run until they all exist.** Its
+  `.github/scripts/validate-npm-packages.sh` step checks every one of your scoped
+  packages against the registry and fails the job on the first missing name, so an
+  unbootstrapped package doesn't half-publish a release, it stops it.
+
+### 1. Own the npm scope
+
+The scope in your package names (`@acme/crm-*`) must be an npm org or user you control.
+Create the org on npmjs.com first if it doesn't exist — this is also the moment to decide
+the scope, because renaming it later means republishing under new names
+([init-script.md](init-script.md) `--scope`).
+
+### 2. Publish a `0.0.0` placeholder for EVERY publishable package
+
+One per package in `packages/*` — five of them in this template's layout
+(`entities`, `actions`, `core-entities-server`, `server`, `ng`). Each needs to exist at
+some version; `0.0.0` is the conventional "nothing released yet" marker, and it matches
+what the repo already carries, so nothing has to be edited to make the two agree.
+
+From each package directory, signed in with `npm login` (or a classic automation token):
+
+```sh
+cd packages/Entities
+npm publish --access public       # publishes the 0.0.0 already in package.json
+```
+
+`--access public` is required for a scoped package the first time — scoped packages
+default to restricted, and a restricted package fails the install for consumers. (This is
+the one step that uses the `npm` CLI rather than pnpm: it is a registry operation, not a
+workspace install.)
+
+Two things that make this smoother:
+
+- The packages build to `dist/` and declare `files: ["/dist"]`, so run `pnpm run
+  build:packages` first — a placeholder with no `dist/` publishes an empty tarball, which
+  works as a placeholder but confuses anyone who looks.
+- If you'd rather not ship any real content yet, publishing from a scratch directory with
+  a minimal `package.json` (just `name`, `version`, `license`, `publishConfig`) is
+  equivalent for bootstrap purposes — the point is only that the name exists.
+- **A package that should never be published needs no placeholder — mark it
+  `"private": true`.** `changeset publish` skips private packages, and the CI gate skips
+  them for the same reason (it logs the skip, so an accidental `private: true` on a package
+  you *did* mean to publish is still visible in the run). That is the lever for things like
+  an integration-test package that lives in `packages/` but has no business on the
+  registry.
+
+### 3. Add the Trusted Publisher on each package
+
+On npmjs.com, for **each** package: **Settings → Trusted Publisher → GitHub Actions**,
+then select your org, enter the repository, and name the workflow file **`publish.yml`**.
+Check the option allowing npm publish, and save.
+
+### 4. Never touch a token again
+
+From then on `publish.yml` authenticates via **OIDC** — there is **no `NPM_TOKEN` secret**
+to create, store or rotate (`publish.yml` already declares `permissions: id-token: write`).
+Releases also carry npm **provenance**, which is why CI validates that every package's
+`repository.url` matches the root.
+
+### Checklist
+
+- [ ] npm scope owned
+- [ ] `0.0.0` published for all five packages (`npm view <name> version` returns `0.0.0`)
+- [ ] Trusted Publisher configured per package, pointing at `publish.yml`
+- [ ] `.github/scripts/validate-npm-packages.sh` passes locally
+- [ ] first changeset written — the release flow takes it from `0.0.0` to `0.1.0`
+
+## Why this template ships no changesets
+
+`.changeset/` here contains only `config.json` and the README — deliberately, and it should
+stay that way. The template's own `@mj-sample-app/*` packages are **never published**
+(`publish.yml` is guarded on `github.repository` so they can't be), so a changeset would
+only produce a "Version Packages" PR bumping sample packages nobody consumes, and push the
+checked-in versions off the `0.0.0` start that makes a developer's first release land on
+`0.1.0`.
+
+Your first changeset is the one you write for **your** first real change:
+`pnpm exec changeset`.
 
 ## GitHub release tags
 
@@ -116,7 +188,8 @@ tag (step 4 guarantees it).
 Within a published **major** version, schema changes must be **additive only**:
 no dropping tables/columns, no narrowing types, no renames, no new required
 parameters. Anything breaking forces a **major** bump. Consult MemberJunction's
-`packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md` before authoring any migration
+[`packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/PUBLISH_NO_BREAK_POLICY.md)
+before authoring any migration
 that touches an existing published schema — upgraders run only your NEW
 migrations, never a rebuild.
 

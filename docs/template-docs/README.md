@@ -19,6 +19,11 @@ The **MemberJunction development guide** (critical rules, entity/data
 patterns, CodeGen + migration authoring, Angular, style, testing — adapted
 from MJ's own `CLAUDE.md` into topic docs) is **[../claude/](../claude/README.md)**.
 
+**MemberJunction's own docs** are the authority for everything about MJ itself: the Open App
+format is [`packages/OpenApp/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/README.md), the development
+rulebook is [`CLAUDE.md`](https://github.com/MemberJunction/MJ/blob/next/CLAUDE.md), and every deep-dive guide is indexed in
+[`guides/README.md`](https://github.com/MemberJunction/MJ/blob/next/guides/README.md). Each page here links the MJ guides relevant to it.
+
 The **format reference** for the manifest is [`../../mj-app.reference.jsonc`](../../mj-app.reference.jsonc);
 the **inventory of what a finished app contains** (required vs optional) is
 [`plans/complete/TEMPLATE-SPEC.md`](../../plans/complete/TEMPLATE-SPEC.md).

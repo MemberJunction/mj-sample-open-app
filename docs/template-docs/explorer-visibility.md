@@ -140,3 +140,12 @@ emitted SQL into a `V<timestamp>__v<x.y.x>_Metadata_Sync.sql` migration with
 2. In the switcher but the tab is empty? → `DriverClass` ↔ `@RegisterClass` mismatch, or the component was tree-shaken (§1, §2).
 3. Was MJExplorer rebuilt after the import was added? (§2)
 4. Is the bucket app showing instead of yours? → `DefaultForNewUser` (§4).
+
+
+## MJ's own references
+
+- [`packages/OpenApp/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/README.md) — the client-side half of the Open App contract: the generated bootstrap file, resource components, and the nav-item table this page expands on
+- [`guides/NAVIGATION_AND_ROUTING_GUIDE.md`](https://github.com/MemberJunction/MJ/blob/next/guides/NAVIGATION_AND_ROUTING_GUIDE.md) — how Explorer navigation, tabs and routes actually work
+- [`guides/DASHBOARD_BEST_PRACTICES.md`](https://github.com/MemberJunction/MJ/blob/next/guides/DASHBOARD_BEST_PRACTICES.md) — the load-complete lifecycle and dashboard patterns, if your page is a dashboard
+- [`guides/FORMS_ARCHITECTURE_GUIDE.md`](https://github.com/MemberJunction/MJ/blob/next/guides/FORMS_ARCHITECTURE_GUIDE.md) — for the generated entity forms your app also surfaces
+- [`guides/UNIFIED_PERMISSIONS_GUIDE.md`](https://github.com/MemberJunction/MJ/blob/next/guides/UNIFIED_PERMISSIONS_GUIDE.md) — the permission model behind who can see an app and its entities

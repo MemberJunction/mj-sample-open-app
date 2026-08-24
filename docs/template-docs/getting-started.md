@@ -30,8 +30,9 @@ manual equivalent — and the reference for what the script touched.
 
 ## 2. Decide which blocks you keep
 
-Every capability block is optional (see `mj-app.reference.jsonc`). Delete what
-you don't need — a manifest-only app is valid:
+Every capability block is optional (see [`mj-app.reference.jsonc`](../../mj-app.reference.jsonc),
+and MJ's own [`packages/OpenApp/README.md`](https://github.com/MemberJunction/MJ/blob/next/packages/OpenApp/README.md) for what each
+block means at install time). Delete what you don't need — a manifest-only app is valid:
 
 - No database tables? Delete `schema` + `migrations` blocks, `migrations/`, and the DB steps below.
 - No server code? Delete `packages.server`, `packages/Server`, `packages/CoreEntitiesServer`, `packages/Actions`.
