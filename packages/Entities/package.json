@@ -4,6 +4,8 @@
   "type": "module",
   "description": "Generated entity subclasses for the app schema. TODO(template): rename package + description.",
   "main": "dist/index.js",
+  "files": ["/dist"],
+  "publishConfig": { "access": "public" },
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && tsc-alias -f",
