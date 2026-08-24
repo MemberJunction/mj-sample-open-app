@@ -36,6 +36,9 @@ importers:
       '@memberjunction/core':
         specifier: 6.1.0-edge.3
         version: 6.1.0-edge.3
+      '@memberjunction/core-entities':
+        specifier: 6.1.0-edge.3
+        version: 6.1.0-edge.3
       '@memberjunction/global':
         specifier: 6.1.0-edge.3
         version: 6.1.0-edge.3
@@ -46,6 +49,9 @@ importers:
         specifier: 6.1.0-edge.3
         version: 6.1.0-edge.3(a6a8b44abd5c78d6157895340b7cb10b)
       '@memberjunction/ng-link-directives':
+        specifier: 6.1.0-edge.3
+        version: 6.1.0-edge.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/router@21.2.21(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/platform-browser@21.1.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)(ws@8.21.3)
+      '@memberjunction/ng-shared':
         specifier: 6.1.0-edge.3
         version: 6.1.0-edge.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/router@21.2.21(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/platform-browser@21.1.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)(ws@8.21.3)
       '@memberjunction/server':
@@ -106,6 +112,9 @@ importers:
       '@angular/forms':
         specifier: '>=21.0.0 <22.0.0'
         version: 21.1.3(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/platform-browser@21.1.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@memberjunction/core-entities':
+        specifier: ^6.1.0-edge.3
+        version: 6.1.0-edge.3
       '@memberjunction/global':
         specifier: 6.1.0-edge.3
         version: 6.1.0-edge.3
@@ -116,6 +125,9 @@ importers:
         specifier: ^6.1.0-edge.3
         version: 6.1.0-edge.3(a6a8b44abd5c78d6157895340b7cb10b)
       '@memberjunction/ng-link-directives':
+        specifier: ^6.1.0-edge.3
+        version: 6.1.0-edge.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/router@21.2.21(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/platform-browser@21.1.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)(ws@8.21.3)
+      '@memberjunction/ng-shared':
         specifier: ^6.1.0-edge.3
         version: 6.1.0-edge.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/router@21.2.21(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(@angular/platform-browser@21.1.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)(ws@8.21.3)
       '@mj-sample-app/entities':
@@ -9999,7 +10011,7 @@ snapshots:
       '@memberjunction/ai-vectordb': 6.1.0-edge.3
       '@memberjunction/core': 6.1.0-edge.3
       '@memberjunction/global': 6.1.0-edge.3
-      dotenv: 17.2.4
+      dotenv: 17.4.2
       pg: 8.23.0
     transitivePeerDependencies:
       - pg-native
@@ -10035,7 +10047,7 @@ snapshots:
       '@memberjunction/core': 6.1.0-edge.3
       '@memberjunction/global': 6.1.0-edge.3
       '@qdrant/js-client-rest': 1.19.0(typescript@5.9.3)
-      dotenv: 17.2.4
+      dotenv: 17.4.2
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -10045,7 +10057,7 @@ snapshots:
       '@memberjunction/ai-vectordb': 6.1.0-edge.3
       '@memberjunction/core': 6.1.0-edge.3
       '@memberjunction/global': 6.1.0-edge.3
-      dotenv: 17.2.4
+      dotenv: 17.4.2
     transitivePeerDependencies:
       - supports-color
 
@@ -10686,7 +10698,7 @@ snapshots:
       date-fns: 3.6.0
       date-fns-tz: 3.2.0(date-fns@3.6.0)
       domhandler: 5.0.3
-      dotenv: 17.2.4
+      dotenv: 17.4.2
       officeparser: 6.1.1(encoding@0.1.13)
       openai: 6.49.0(@aws-sdk/credential-provider-node@3.972.81)(@smithy/signature-v4@5.7.3)(ws@8.21.3)(zod@3.25.76)
       pdf-parse: 1.1.4
@@ -10739,7 +10751,7 @@ snapshots:
       date-fns: 3.6.0
       date-fns-tz: 3.2.0(date-fns@3.6.0)
       domhandler: 5.0.3
-      dotenv: 17.2.4
+      dotenv: 17.4.2
       officeparser: 6.1.1(encoding@0.1.13)
       openai: 6.49.0(@aws-sdk/credential-provider-node@3.972.81)(@smithy/signature-v4@5.7.3)(ws@8.21.3)(zod@3.25.76)
       pdf-parse: 1.1.4
@@ -15283,7 +15295,7 @@ snapshots:
 
   '@types/uuid@11.0.0':
     dependencies:
-      uuid: 13.0.2
+      uuid: 14.0.2
 
   '@types/validator@13.15.10': {}
 

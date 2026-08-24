@@ -55,7 +55,13 @@
  * TODO(template): rename the function to Load<YourApp>Client and keep it in
  * sync with mj-app.json "startupExport".
  */
+import { LoadSampleAppOverviewResource } from './lib/overview/overview.resource';
+
+export { SampleAppOverviewResourceComponent } from './lib/overview/overview.resource';
+
 export function LoadSampleAppClient(): void {
-    // No-op until you add components: importing this module is what
-    // registers everything above.
+    // Call each component module's anchor so its @RegisterClass decorators run.
+    // Importing this module is what triggers the chain; the calls keep a bundler
+    // from concluding the modules are unused and dropping them.
+    LoadSampleAppOverviewResource();
 }
