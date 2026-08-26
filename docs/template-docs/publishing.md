@@ -199,10 +199,7 @@ migrations, never a rebuild.
 - [ ] Migrations + regenerated code committed together (see codegen doc)
 - [ ] `next` is green (build.yml + changes.yml)
 - [ ] "Version Packages" PR reviewed and merged into `next` (check it carries the
-      refreshed lockfile and the `mj-app.json` sync). Under the default
-      `GITHUB_TOKEN` its checks do not start on their own — they sit waiting, and
-      a maintainer clicks **Approve and run** on the PR. One click, not a dead
-      end; a GitHub App token removes the click, since App-created PRs trigger
-      workflows normally.
+      refreshed lockfile and the `mj-app.json` sync). Its checks run on their own:
+      the PR is opened by a GitHub App, and App-created PRs trigger workflows.
 - [ ] Release PR `next` → `main` green on `release-readiness`
 - [ ] Workflow run green; tag exists; packages on npm
